@@ -1044,10 +1044,11 @@ html, body {
 const CATS = [
   {id:"passeport",  label:"Passeport",           icon:"🛂"},
   {id:"ci",         label:"Carte d'identité",     icon:"🪪"},
-  {id:"permis",     label:"Permis",               icon:"🚦"},
+  {id:"permis",     label:"Permis de conduire",   icon:"🚦"},
   {id:"vehicule",   label:"Véhicule",             icon:"🚗"},
   {id:"voles",      label:"Véhicules volés",      icon:"🚨"},
   {id:"assurance",  label:"Assurance",            icon:"🛡️"},
+  {id:"vtc",        label:"VTC",                  icon:"🚖"},
   {id:"personnes",  label:"Pers. recherchées",    icon:"🔎"},
 ];
 
@@ -1055,300 +1056,347 @@ const TAG_CSS   = {free:"t-free", login:"t-login", partial:"t-partial"};
 const TAG_LABEL = {free:"Libre", login:"Connexion", partial:"Partiel"};
 
 const DATA = [
-  // ══ PASSEPORT ══
-  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",    cat:"passeport", links:[
-    {label:"CheckDoc – Passeport",                        url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
+  // ══════════════════════════════════
+  // PASSEPORT
+  // ══════════════════════════════════
+
+  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",            cat:"passeport", links:[
+    {label:"CheckDoc – Passeport",                                     url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
   ]},
-  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"passeport", links:[
-    {label:"Passeport (MVR officiel)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport (MVR officiel)",                                 url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
   ]},
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"passeport", links:[
-    {label:"Passeport invalide – MV",                     url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport invalide – MV",                                  url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
   ]},
-  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"passeport", links:[
-    {label:"Validité document (Politsei)",                url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"},
-    {label:"Validité passeport (MFA)",                    url:"https://idchk.mfa.ee/", tag:"free"}
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport (Politsei)",                                     url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"}
   ]},
-  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"passeport", links:[
-    {label:"Passeport grec (Centre national)",            url:"https://www.passport.gov.gr/en/", tag:"free"}
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport grec (passport.gov.gr)",                         url:"https://www.passport.gov.gr/en/", tag:"free"}
   ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"passeport", links:[
-    {label:"Passeport perdu/volé – CrimNet",              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport perdu/volé – CrimNet",                           url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
   ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"passeport", links:[
-    {label:"Documents invalides (IRD)",                   url:"https://www.ird.lt/en/invalidpapers/", tag:"free"},
-    {label:"Portail recherches (policija.lrv.lt)",        url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport perdu ou volé (Politiet)",                       url:"https://www.politiet.no/en/english/identity-check/check-passport-and-id-card-status/", tag:"free"}
   ]},
-  {code:"MDA", country:"Moldavie",            flag:"🇲🇩", region:"EU",    cat:"passeport", links:[
-    {label:"Statut document – passeport/CI (ASP)",        url:"https://www.asp.gov.md/ro/verifica-document", translate:true, tag:"free"}
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport volé/perdu (e-uprava)",                          url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
   ]},
-  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"passeport", links:[
-    {label:"Historique véhicule (historiapojazdu)",       url:"https://historiapojazdu.gov.pl/", translate:true, tag:"free"}
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",            cat:"passeport", links:[
+    {label:"Passeport perdu ou volé (MINV)",                           url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
   ]},
-  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"passeport", links:[
-    {label:"Passeport perdu ou volé (MINV)",              url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",            cat:"passeport", links:[
+    {label:"Validité passeport (Polisen)",                             url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
   ]},
-  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"passeport", links:[
-    {label:"Documents invalides (e-uprava)",              url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
+  {code:"IND", country:"Inde",                flag:"🇮🇳", region:"Monde",         cat:"passeport", links:[
+    {label:"Statut passeport indien (Passport Seva)",                  url:"https://www.passportindia.gov.in/psp", tag:"free"}
   ]},
-  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"passeport", links:[
-    {label:"Validité passeport (Polisen)",                url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
+  {code:"BTN", country:"Bhoutan",             flag:"🇧🇹", region:"Monde",         cat:"passeport", links:[
+    {label:"Portail citoyen Bhoutan – passeport / CID (G2C)",                 url:"https://www.citizenservices.gov.bt/", tag:"login"}
   ]},
-  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"passeport", links:[
-    {label:"Statut passeport/CNI (Politiet)",             url:"https://www.politiet.no/en/english/identity-check/check-passport-and-id-card-status/", tag:"free"}
+  {code:"KGZ", country:"Kirghizistan",        flag:"🇰🇬", region:"Monde",         cat:"passeport", links:[
+    {label:"e-Gov docs (portail Tunduk)",                              url:"https://portal.tunduk.kg/public_services/opisanie/213", translate:true, tag:"free"}
   ]},
-  {code:"MAR", country:"Maroc",               flag:"🇲🇦", region:"Monde", cat:"passeport", links:[
-    {label:"Passeport marocain (passeport.ma)",           url:"https://www.passeport.ma/", tag:"free"}
+  {code:"TUR",  country:"Turquie",             flag:"🇹🇷", region:"Monde",         cat:"passeport", links:[
+    {label:"Passeport / CI turc (NVI officiel)",                       url:"https://tckimlik.nvi.gov.tr/", tag:"free"}
   ]},
-  {code:"IND", country:"Inde",                flag:"🇮🇳", region:"Monde", cat:"passeport", links:[
-    {label:"Statut passeport (Passport Seva)",            url:"https://www.passportindia.gov.in/psp", tag:"free"}
+  {code:"MAR",  country:"Maroc",               flag:"🇲🇦", region:"Monde",         cat:"passeport", links:[
+    {label:"Passeport biométrique marocain (passeport.ma)",            url:"https://www.passeport.ma/", tag:"free"}
   ]},
-  {code:"BTN", country:"Bhoutan",             flag:"🇧🇹", region:"Monde", cat:"passeport", links:[
-    {label:"Portail citoyen Bhoutan – passeport/CID",    url:"https://www.citizenservices.gov.bt/", tag:"login"}
+  {code:"INTER",country:"Interpol",           flag:"🌐", region:"International",  cat:"passeport", links:[
+    {label:"Notices rouges Interpol",                                  url:"https://www.interpol.int/How-we-work/Notices/View-Red-Notices", tag:"free"}
   ]},
 
-  // ══ CARTE D'IDENTITÉ ══
-  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",    cat:"ci", links:[
-    {label:"CI/Passeport AT (CHECK-AT)",                  url:"https://check-at.gv.at/", tag:"free"}
+  // ══════════════════════════════════
+  // CARTE D'IDENTITÉ
+  // ══════════════════════════════════
+  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",            cat:"ci", links:[
+    {label:"Carte d'identité 2021 – vérif. sécurité (check-at.gv.at)",url:"https://check-at.gv.at/", tag:"free"}
   ]},
-  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",    cat:"ci", links:[
-    {label:"CheckDoc – Carte d'identité",                 url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
+  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",            cat:"ci", links:[
+    {label:"CheckDoc – Carte d'identité",                              url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
   ]},
-  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"ci", links:[
-    {label:"Documents bulgares (MVR)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"ci", links:[
+    {label:"Numéro personnel EGN (CI bulgare)",                        url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"},
+    {label:"CI (MVR officiel)",                                        url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
   ]},
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"ci", links:[
-    {label:"CI invalide – MV",                            url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"ci", links:[
+    {label:"CI invalide – MV",                                         url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
   ]},
-  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"ci", links:[
-    {label:"Validité CI (Politsei)",                      url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"},
-    {label:"Validité CI (MFA)",                           url:"https://idchk.mfa.ee/", tag:"free"}
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",            cat:"ci", links:[
+    {label:"CI (Politsei)",                                            url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"},
+    {label:"Carte diplomatique / service (MFA)",                       url:"https://idchk.mfa.ee/", tag:"free"}
   ]},
-  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"ci", links:[
-    {label:"Titre séjour ressortissants étrangers",       url:"https://pf.emigrants.ypes.gr/pf/?lang=en", tag:"free"}
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"ci", links:[
+    {label:"CI perdue/volée – CrimNet",                                url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"},
+    {label:"Codice Fiscale – vérification officielle (Agenzia Entrate)",url:"https://telematici.agenziaentrate.gov.it/VerificaCF/Scegli.do", translate:true, tag:"free"}
   ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"ci", links:[
-    {label:"CI perdue/volée – CrimNet",                   url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"},
-    {label:"Codice Fiscale (Agenzia Entrate)",            url:"https://telematici.agenziaentrate.gov.it/VerificaCF/Scegli.do", translate:true, tag:"free"}
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"ci", links:[
+    {label:"Documents invalides – CI / passeport (ird.lt Policija)",   url:"https://www.ird.lt/en/invalidpapers/", tag:"free"},
+    {label:"Portail recherches bases de données (policija.lrv.lt)",    url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
   ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"ci", links:[
-    {label:"Documents invalides (IRD)",                   url:"https://www.ird.lt/en/invalidpapers/", tag:"free"},
-    {label:"Portail recherches (policija.lrv.lt)",        url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  {code:"LVA", country:"Lettonie",            flag:"🇱🇻", region:"EU",            cat:"ci", links:[
+    {label:"CI (latvija.lv)",                                          url:"https://epakalpojumi.latvija.lv/EServices/EP22-v1-3/About.aspx?language=EN", tag:"free"}
   ]},
-  {code:"MDA", country:"Moldavie",            flag:"🇲🇩", region:"EU",    cat:"ci", links:[
-    {label:"Statut document (ASP)",                       url:"https://www.asp.gov.md/ro/verifica-document", translate:true, tag:"free"}
+  {code:"MDA", country:"Moldavie",            flag:"🇲🇩", region:"EU",            cat:"ci", links:[
+    {label:"Statut document – passeport / CI (ASP officiel)",                          url:"https://www.asp.gov.md/ro/verifica-document", translate:true, tag:"free"}
   ]},
-  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"ci", links:[
-    {label:"CI perdue ou volée (MINV)",                   url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",            cat:"ci", links:[
+    {label:"Carte nationale – perdue ou volée",                        url:"https://www.politiet.no/en/english/identity-check/check-passport-and-id-card-status/", tag:"free"}
   ]},
-  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"ci", links:[
-    {label:"CI volée/perdue (e-uprava)",                  url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",            cat:"ci", links:[
+    {label:"CI perdue ou volée (MINV)",                                url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
   ]},
-  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"ci", links:[
-    {label:"Carte nationale d'identité (Polisen)",        url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",            cat:"ci", links:[
+    {label:"CI volée/perdue (e-uprava)",                               url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
   ]},
-  {code:"ARE", country:"Émirats Arabes Unis", flag:"🇦🇪", region:"Monde", cat:"ci", links:[
-    {label:"Statut carte d'identité (ICP)",               url:"https://icp.gov.ae/en/id-card-status/", tag:"free"}
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",            cat:"ci", links:[
+    {label:"Carte nationale d'identité (Polisen)",                     url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
   ]},
-
-  // ══ PERMIS DE CONDUIRE ══
-  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"permis", links:[
-    {label:"Permis de conduire (MVR)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  {code:"ARE", country:"Émirats Arabes Unis", flag:"🇦🇪", region:"Monde",         cat:"ci", links:[
+    {label:"Statut carte d'identité (ICA)",                            url:"https://icp.gov.ae/en/id-card-status/", tag:"free"}
   ]},
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"permis", links:[
-    {label:"Permis invalide – MV",                        url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
-  ]},
-  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",    cat:"permis", links:[
-    {label:"Livret maritime DIM (Ministère Transports)",  url:"https://sede.transportes.gob.es/MFOM.DGMM.LibretaMaritima.Web/Default.aspx?lang=en", translate:true, tag:"free"}
-  ]},
-  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"permis", links:[
-    {label:"Validité permis (eRegitra)",                  url:"https://www.eregitra.lt/services/driver-license/validity-info", tag:"free"}
-  ]},
-  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",    cat:"permis", links:[
-    {label:"Permis de conduire UK (DVLA)",                url:"https://www.viewdrivingrecord.service.gov.uk/driving-record/licence-number", tag:"login"}
-  ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"permis", links:[
-    {label:"Permis perdu/volé – CrimNet",                 url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
-  ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"permis", links:[
-    {label:"Validité permis (eRegitra)",                  url:"https://www.eregitra.lt/services/driver-license/validity-info", tag:"free"}
-  ]},
-  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"permis", links:[
-    {label:"Registre transporteurs (Vegvesen)",           url:"https://www.vegvesen.no/en/vehicles/professional-transport/permits/oppslag-i-transportorregister/", tag:"free"}
-  ]},
-  {code:"AUS", country:"Australie – QLD",     flag:"🇦🇺", region:"Monde", cat:"permis", links:[
-    {label:"Vérif. permis Queensland",                   url:"https://www.service.transport.qld.gov.au/checkdriverlicencestatus/application/SpecifyCustomer.xhtml", tag:"free"}
-  ]},
-  {code:"AUS", country:"Australie – WA",      flag:"🇦🇺", region:"Monde", cat:"permis", links:[
-    {label:"Vérif. permis Australie Occidentale",        url:"https://www.transport.wa.gov.au/licensing/make-an-online-enquiry.asp", tag:"free"}
-  ]},
-  {code:"CAN", country:"Canada – Ontario",    flag:"🇨🇦", region:"Monde", cat:"permis", links:[
-    {label:"Vérif. permis Ontario (MTO)",                url:"https://www.dlc.rus.mto.gov.on.ca/dlc/enter-details", tag:"free"}
-  ]},
-  {code:"CAN", country:"Canada – Québec",     flag:"🇨🇦", region:"Monde", cat:"permis", links:[
-    {label:"Vérif. permis Québec (SAAQ)",                url:"https://saaq.gouv.qc.ca/en/online-services/citizens/checking-validity-drivers-licence", tag:"free"}
-  ]},
-  {code:"HKG", country:"Hong Kong",           flag:"🇭🇰", region:"Monde", cat:"permis", links:[
-    {label:"Renouvellement permis (TD HK)",              url:"https://eapps2.td.gov.hk/odlr/odlr_ext_web/viewApps0201.do", tag:"free"}
-  ]},
-  {code:"PAK", country:"Pakistan – Punjab",   flag:"🇵🇰", region:"Monde", cat:"permis", links:[
-    {label:"Vérification permis (DLIMS Punjab)",         url:"https://dlims.punjab.gov.pk/verify/", tag:"free"}
-  ]},
-  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"Monde", cat:"permis", links:[
-    {label:"Vérif. permis conducteur (HSC)",             url:"https://opendata.hsc.gov.ua/check-driver-license/", tag:"free"}
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",            cat:"ci", links:[
+    {label:"Titre séjour ressortissants étrangers (YPES)",             url:"https://pf.emigrants.ypes.gr/pf/?lang=en", tag:"free"}
   ]},
 
-  // ══ VÉHICULE ══
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"vehicule", links:[
-    {label:"Véhicules volés/recherchés (Policie CZ)",    url:"https://aplikace.policie.cz/patrani-vozidla/", translate:true, tag:"free"}
+  // ══════════════════════════════════
+  // PERMIS DE CONDUIRE
+  // ══════════════════════════════════
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"permis", links:[
+    {label:"Permis de conduire (MVR)",                                 url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
   ]},
-  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",    cat:"vehicule", links:[
-    {label:"Registre national véhicules (skat.dk)",      url:"https://motorregister.skat.dk/dmr-kerne/koeretoejdetaljer/visKoeretoej?execution=e3s1", translate:true, tag:"free"}
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"permis", links:[
+    {label:"Permis invalide – MV",                                     url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
   ]},
-  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"vehicule", links:[
-    {label:"Historique véhicule (Transpordiameti)",      url:"https://eteenindus.mnt.ee/public/soidukTaustakontroll.jsf", tag:"free"}
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",            cat:"permis", links:[
+    {label:"Livret maritime DIM (Ministère Transports Espagne)",        url:"https://sede.transportes.gob.es/MFOM.DGMM.LibretaMaritima.Web/Default.aspx?lang=en", translate:true, tag:"free"}
   ]},
-  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",    cat:"vehicule", links:[
-    {label:"HistoVec – historique véhicule",             url:"https://histovec.interieur.gouv.fr/histovec/accueil", tag:"free"},
-    {label:"UTAC-OTC – centre dernier contrôle tech.",   url:"https://www.utac-otc.com/vehicule_leger/Pages/Dernier-Lieu-passage.aspx", tag:"free"}
-  ]},
-  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",    cat:"vehicule", links:[
-    {label:"Véhicule UK – taxe/contrôle (GOV.UK)",       url:"https://www.vehicleenquiry.service.gov.uk", tag:"free"}
-  ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"vehicule", links:[
-    {label:"Données véhicule (eRegitra)",                url:"https://www.eregitra.lt/services/vehicle-registration/data-search", tag:"free"}
-  ]},
-  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"vehicule", links:[
-    {label:"Infos véhicule (Statens vegvesen)",          url:"https://www.vegvesen.no/kjoretoy/kjop-og-salg/kjoretoyopplysninger/sjekk-kjoretoyopplysninger/", translate:true, tag:"free"}
-  ]},
-  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"vehicule", links:[
-    {label:"Historique véhicule (historiapojazdu)",      url:"https://historiapojazdu.gov.pl/", translate:true, tag:"free"}
-  ]},
-  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",    cat:"vehicule", links:[
-    {label:"Immatriculation (automovelonline.mj.pt)",    url:"https://www.automovelonline.mj.pt/AutoOnlineProd/FrontOfficeController?action=validaMatricula&url=FrontOfficeController%3Faction%3Dpedidocertidao", translate:true, tag:"free"}
-  ]},
-  {code:"USA", country:"États-Unis",          flag:"🇺🇸", region:"Monde", cat:"vehicule", links:[
-    {label:"Historique véhicule NMVTIS (DOJ)",           url:"https://vehiclehistory.bja.ojp.gov/nmvtis_vehiclehistory", tag:"free"}
-  ]},
-  {code:"CHN", country:"Chine",               flag:"🇨🇳", region:"Monde", cat:"vehicule", links:[
-    {label:"Historique véhicule chinois",                url:"https://www.chinavehiclehistory.com/", tag:"free"}
-  ]},
-  {code:"NZL", country:"Nouvelle-Zélande",    flag:"🇳🇿", region:"Monde", cat:"vehicule", links:[
-    {label:"Véhicules volés (Police NZ)",                url:"https://www.police.govt.nz/can-you-help-us/stolen-vehicles", tag:"free"}
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",            cat:"permis", links:[
+    {label:"Permis de conduire – DVLA",                                url:"https://www.viewdrivingrecord.service.gov.uk/driving-record/licence-number", tag:"free"},
+    {label:"Infos véhicule & conducteur (GOV.UK)",                     url:"https://www.gov.uk/browse/driving/vehicle-and-driver-information", tag:"free"}
   ]},
 
-  // ══ VÉHICULES VOLÉS ══
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"voles", links:[
-    {label:"Véhicules volés/recherchés (Policie CZ)",    url:"https://aplikace.policie.cz/patrani-vozidla/", translate:true, tag:"free"}
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"permis", links:[
+    {label:"Permis perdu/volé – CrimNet",                              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
   ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"voles", links:[
-    {label:"Véhicule volé – plaques/châssis CrimNet",    url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-targhe-telai-rubati-smarriti", translate:true, tag:"free"},
-    {label:"Billets contrefaits – CrimNet",              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-banconote-contraffatte", translate:true, tag:"free"}
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"permis", links:[
+    {label:"Validité permis de conduire (eRegitra)",                   url:"https://www.eregitra.lt/services/driver-license/validity-info", tag:"free"},
+    {label:"Documents invalides incl. permis (ird.lt)",                url:"https://www.ird.lt/en/invalidpapers/", tag:"free"}
   ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"voles", links:[
-    {label:"Véhicules volés/plaques (Police LT – en reconstruction)", url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  {code:"LVA", country:"Lettonie",            flag:"🇱🇻", region:"EU",            cat:"permis", links:[
+    {label:"Permis de conduire (latvija.lv)",                          url:"https://epakalpojumi.latvija.lv/EServices/EP22-v1-3/About.aspx?language=EN", tag:"free"}
   ]},
-  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"voles", links:[
-    {label:"Objets/véhicules recherchés (MINV)",         url:"https://www.minv.sk/?patrveci-index", translate:true, tag:"free"}
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",            cat:"permis", links:[
+    {label:"Permis volé/perdu (e-uprava)",                             url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
   ]},
-  {code:"INT", country:"International",       flag:"🌍", region:"EU",    cat:"voles", links:[
-    {label:"StolenCars24 – Base européenne",             url:"https://www.stolencars24.eu/fr/main.php", tag:"free"}
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"permis", links:[
+    {label:"Permis de conduire (HSC MIA Ukraine)",                     url:"https://opendata.hsc.gov.ua/check-driver-license/", tag:"free"}
   ]},
-  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"voles", links:[
-    {label:"Véhicules volés – CPIC (GRC)",               url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"permis", links:[
+    {label:"Statut émission permis roumain (DGPCI)",                   url:"https://dgpci.mai.gov.ro/drpciv-forms/license", translate:true, tag:"free"}
   ]},
-
-  // ══ ASSURANCE ══
-  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule AT (VVOnet)",                    url:"https://vvonet.vvo.at/vvonet_versichererauskunft", tag:"free"}
+  {code:"AUS", country:"Australie",           flag:"🇦🇺", region:"Monde",         cat:"permis", links:[
+    {label:"Permis – Australie Occidentale",                           url:"https://www.transport.wa.gov.au/licensing/make-an-online-enquiry.asp", tag:"free"},
+    {label:"Permis – Queensland",                                      url:"https://www.service.transport.qld.gov.au/checkdriverlicencestatus/application/SpecifyCustomer.xhtml", tag:"free"}
   ]},
-  {code:"BIH", country:"Bosnie",              flag:"🇧🇦", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance BIH (BZK BIH)",                    url:"https://www.bzkbih.ba/en/provjera-osiguranja", tag:"free"}
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde",         cat:"permis", links:[
+    {label:"Permis de conduire – Ontario",                             url:"https://www.dlc.rus.mto.gov.on.ca/dlc/enter-details", tag:"free"},
+    {label:"Permis de conduire – Québec (SAAQ)",                       url:"https://saaq.gouv.qc.ca/en/online-services/citizens/checking-validity-drivers-licence", tag:"free"}
   ]},
-  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule CZ – plaque/VIN (CKP)",          url:"https://ic.ckp.cz/ICwww/servlet?_page=searchSPZ&lngID=2", translate:true, tag:"free"}
-  ]},
-  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance véhicule DK (DFIM)",               url:"https://www.dfim.dk/en/accidents-in-denmark/insurance-danish-motor-vehicle/", tag:"free"}
-  ]},
-  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule ET – assureur (LKF)",            url:"https://vs.lkf.ee/pls/xlk/!sysadm.ic_insurance_cover_pkt.show_form?p_purpose=CLAIM&p_lang=ENG", tag:"free"}
-  ]},
-  {code:"FIN", country:"Finlande",            flag:"🇫🇮", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule FI (claimsic.fi)",               url:"https://www.claimsic.fi/#!/licence-plate-search", translate:true, tag:"free"}
-  ]},
-  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",    cat:"assurance", links:[
-    {label:"Fonds de Garantie – FVA (fva-assurance.fr)", url:"https://www.fva-assurance.fr/consulter-le-fva/", tag:"free"}
-  ]},
-  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance véhicule GR (HIC)",                url:"https://www.hic.gr/hic/Check_ins.aspx", tag:"free"},
-    {label:"Fonds de garantie (guaranteefund.org)",      url:"https://www2.guaranteefund.org/en/information-center/services/motor-third-party-liability-insurance-check", tag:"free"}
-  ]},
-  {code:"HRV", country:"Croatie",             flag:"🇭🇷", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance véhicule HR (HUO)",                url:"https://huo.hr/en/information-centre", tag:"free"}
-  ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"assurance", links:[
-    {label:"Vérification RCA par plaque (Portale Automobilista)", url:"https://www.ilportaledellautomobilista.it/web/portale-automobilista/ext/verifica-copertura-rc", translate:true, tag:"free"}
-  ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"assurance", links:[
-    {label:"Assureur responsable véhicule LT (CAB)",     url:"https://www.cab.lt/en/", tag:"free"}
-  ]},
-  {code:"LVA", country:"Lettonie",            flag:"🇱🇻", region:"EU",    cat:"assurance", links:[
-    {label:"Assureur responsable LV (LTAB)",             url:"https://services.ltab.lv/en/RespInsurer", tag:"free"}
-  ]},
-  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule PL (UFG)",                       url:"https://www.ufg.pl/infoportal/faces/pages_home-page", translate:true, tag:"free"}
-  ]},
-  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance par immat. PT (ASF)",              url:"https://www.consumidor.asf.com.pt/servi%C3%A7os/verificar-seguro-atrav%C3%A9s-da-matr%C3%ADcula", tag:"free"}
-  ]},
-  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule RO – RCA (AIDA)",                url:"https://www.aida.info.ro/polite-rca", translate:true, tag:"free"}
-  ]},
-  {code:"SRB", country:"Serbie",              flag:"🇷🇸", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule SRB (UOS Infocenter)",           url:"https://www.udruzenjeosiguravaca.rs:9595/webapp/IC/InfocenterBasicSearch.aspx?lang=eng", translate:true, tag:"free"}
-  ]},
-  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule SK – assureur (SKP)",            url:"https://www.skp.sk/en/search-the-mtpl-insurer/", tag:"free"}
-  ]},
-  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule SI (ZAV infocenter)",            url:"https://infocenter.zav-zdruzenje.si/infocenter-en/infocenter-search-en", tag:"free"}
-  ]},
-  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"assurance", links:[
-    {label:"RC véhicule SE (TFF)",                       url:"https://www.tff.se/en/For-insurance-companies/Insurance-check/", tag:"free"}
-  ]},
-  {code:"TUR", country:"Türkiye",             flag:"🇹🇷", region:"EU",    cat:"assurance", links:[
-    {label:"Identité (TC Kimlik – NVI)",                 url:"https://tckimlik.nvi.gov.tr/", translate:true, tag:"free"}
-  ]},
-  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",    cat:"assurance", links:[
-    {label:"Assurance véhicule UA (MTSBU)",              url:"https://policy.mtsbu.ua/Search/Main/en#tab2", tag:"free"}
-  ]},
-  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"assurance", links:[
-    {label:"Véhicules volés CPIC (GRC)",                 url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
-  ]},
-  {code:"KGZ", country:"Kirghizistan",        flag:"🇰🇬", region:"Monde", cat:"assurance", links:[
-    {label:"e-Gov docs (portail Tunduk)",                url:"https://portal.tunduk.kg/public_services/opisanie/213", translate:true, tag:"free"}
+  {code:"PAK", country:"Pakistan (Punjab)",   flag:"🇵🇰", region:"Monde",         cat:"permis", links:[
+    {label:"Permis de conduire – DLIMS Punjab",                        url:"https://dlims.punjab.gov.pk/verify/", tag:"free"}
   ]},
 
-  // ══ PERSONNES RECHERCHÉES ══
-  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"personnes", links:[
-    {label:"Personnes recherchées (RCMP/GRC)",           url:"https://www.rcmp-grc.gc.ca/en/wanted", tag:"free"}
+  {code:"HKG", country:"Hong Kong",            flag:"🇭🇰", region:"Monde",         cat:"permis", links:[
+    {label:"Permis de conduire – renouvellement / statut (TD.gov.hk)", url:"https://eapps2.td.gov.hk/odlr/odlr_ext_web/viewApps0201.do", tag:"free"}
   ]},
-  {code:"HUN", country:"Hongrie",             flag:"🇭🇺", region:"EU",    cat:"personnes", links:[
-    {label:"Personnes recherchées – mandat d'arrêt",     url:"https://www.police.hu/hu/koral/elfogatoparancs-alapjan-korozott-szemelyek", translate:true, tag:"free"}
+
+
+  // ══════════════════════════════════
+  // VÉHICULE
+  // ══════════════════════════════════
+  {code:"BIH", country:"Bosnie-Herzégovine",  flag:"🇧🇦", region:"EU",            cat:"vehicule", links:[
+    {label:"Carte verte véhicule (BZK BiH)",                           url:"https://www.bzkbih.ba/en/provjera-osiguranja", tag:"free"}
   ]},
-  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"personnes", links:[
-    {label:"Latitanti – personnes en fuite (Polizia)",   url:"https://www.poliziadistato.it/articolo/banche-dati", tag:"free"},
-    {label:"CrimNet – documents volés/perdus",           url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde",         cat:"voles", links:[
+    {label:"Véhicules et biens recherchés (CPIC / GRC)",               url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
   ]},
-  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"personnes", links:[
-    {label:"Base recherchés (policija.lrv.lt)",          url:"https://policija.lrv.lt/en/search-in-databases/search-in-the-database-for-wanted-persons/", translate:true, tag:"free"}
+  {code:"CHN", country:"Chine",               flag:"🇨🇳", region:"Monde",         cat:"vehicule", links:[
+    {label:"Historique véhicule chinois – VIN (privé)",                url:"https://www.chinavehiclehistory.com/", tag:"private"}
   ]},
-  {code:"INT", country:"Interpol",            flag:"🌍", region:"EU",    cat:"personnes", links:[
-    {label:"Notices rouges INTERPOL",                    url:"https://www.interpol.int/How-we-work/Notices/View-Red-Notices", tag:"free"}
+
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés / recherchés (Police CZ)",                 url:"https://aplikace.policie.cz/patrani-vozidla/", translate:true, tag:"free"}
   ]},
-  {code:"INT2", country:"EU Most Wanted",     flag:"🇪🇺", region:"EU",   cat:"personnes", links:[
-    {label:"EU Most Wanted (Europol)",                   url:"https://eumostwanted.eu/", tag:"free"}
+  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",            cat:"vehicule", links:[
+    {label:"Registre national véhicules (motorregister.skat.dk)",      url:"https://motorregister.skat.dk/dmr-kerne/koeretoejdetaljer/visKoeretoej?execution=e3s1", translate:true, tag:"free"}
+  ]},
+  {code:"EUR", country:"Europe – multi-pays", flag:"🌍", region:"EU",            cat:"voles", links:[
+    {label:"StolenCars24 – véhicules volés Europe",                    url:"https://www.stolencars24.eu/fr/main.php", tag:"free"},
+    {label:"Stolen-cars.eu – vérification par plaque/VIN (20+ pays)", url:"https://www.stolen-cars.eu/fr/vehicle-check", tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"assurance", links:[
+    {label:"Vérification assurance RCA par plaque (Portale Automobilista)", url:"https://www.ilportaledellautomobilista.it/web/portale-automobilista/ext/verifica-copertura-rc", translate:true, tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"voles", links:[
+    {label:"Véhicule volé – plaques/châssis CrimNet",                  url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-targhe-telai-rubati-smarriti", translate:true, tag:"free"},
+    {label:"Billets contrefaits – CrimNet",                              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-banconote-contraffatte", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"vehicule", links:[
+    {label:"Données immatriculation (eRegitra)",                       url:"https://www.eregitra.lt/services/vehicle-registration/data-search", tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés / plaques – portail Police LT (en reconstruction)",url:"https://policija.lrv.lt/en/search-in-databases/", tag:"free"},
+    {label:"Portail recherches bases de données (policija.lrv.lt)",    url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  ]},
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",            cat:"vehicule", links:[
+    {label:"Infos véhicule (Statens vegvesen)",                        url:"https://www.vegvesen.no/kjoretoy/kjop-og-salg/kjoretoyopplysninger/sjekk-kjoretoyopplysninger/", translate:true, tag:"free"},
+    {label:"Registre transporteurs professionnels",                    url:"https://www.vegvesen.no/en/vehicles/professional-transport/permits/oppslag-i-transportorregister/", tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique véhicule (historiapojazdu.gov.pl)",             url:"https://historiapojazdu.gov.pl/", translate:true, tag:"free"}
+  ]},
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",            cat:"vehicule", links:[
+    {label:"Immatriculation (automovelonline.mj.pt)",                  url:"https://www.automovelonline.mj.pt/AutoOnlineProd/FrontOfficeController?action=validaMatricula&url=FrontOfficeController%3Faction%3Dpedidocertidao", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",            cat:"voles", links:[
+    {label:"Objets et véhicules recherchés (MINV)",                    url:"https://www.minv.sk/?patrveci-index", translate:true, tag:"free"}
+  ]},
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",            cat:"voles", links:[
+    {label:"Vérification véhicule volé UK (TotalCarCheck)",            url:"https://totalcarcheck.co.uk/StolenCarCheck", tag:"free"}
+  ]},
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",            cat:"voles", links:[
+    {label:"Objets recherchés – assureurs suédois (Larmtjänst)",       url:"https://www.larmtjanst.se/Efterlysta-objekt/", translate:true, tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique véhicule – Transpordiameti (taustakontroll)",    url:"https://eteenindus.mnt.ee/public/soidukTaustakontroll.jsf", tag:"free"}
+  ]},
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",            cat:"vehicule", links:[
+    {label:"Véhicule UK – taxe et contrôle technique (GOV.UK)",        url:"https://www.vehicleenquiry.service.gov.uk", tag:"free"}
+  ]},
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",            cat:"vehicule", links:[
+    {label:"HistoVec – historique véhicule (Ministère Intérieur)",     url:"https://histovec.interieur.gouv.fr/histovec/accueil", tag:"free"},
+    {label:"UTAC-OTC – centre de dernier contrôle technique (par immat.)", url:"https://www.utac-otc.com/vehicule_leger/Pages/Dernier-Lieu-passage.aspx", tag:"free"}
+  ]},
+  {code:"NLD", country:"Pays-Bas",            flag:"🇳🇱", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique véhicule NL – exportation/CT/vol (Finnik/RDW)", url:"https://publiek.vwe.nl/", translate:true, tag:"free"}
+  ]},
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",            cat:"vehicule", links:[
+    {label:"Registre véhicules motorisés (e-uprava)",                  url:"https://e-uprava.gov.si/javne-evidence/motorna-vozila.html", translate:true, tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"vehicule", links:[
+    {label:"Statut immatriculation véhicule roumain (DGPCI)",          url:"https://dgpci.mai.gov.ro/drpciv-forms/vehicle", translate:true, tag:"free"}
+  ]},
+  {code:"NZL", country:"Nouvelle-Zélande",    flag:"🇳🇿", region:"Monde",         cat:"vehicule", links:[
+    {label:"Véhicules volés (Police NZ)",                              url:"https://www.police.govt.nz/can-you-help-us/stolen-vehicles", tag:"free"}
+  ]},
+  {code:"USA", country:"États-Unis",          flag:"🇺🇸", region:"Monde",         cat:"vehicule", links:[
+    {label:"Historique véhicule NMVTIS (DOJ officiel)",                url:"https://vehiclehistory.bja.ojp.gov/nmvtis_vehiclehistory", tag:"free"}
+  ]},
+  // ══════════════════════════════════
+  // VÉHICULES VOLÉS
+  // ══════════════════════════════════
+
+  // ══════════════════════════════════
+  // ASSURANCE — RC véhicule par pays
+  // Source : VVOnet (VVO Autriche) + FVA France + ASF Portugal
+  // ══════════════════════════════════
+  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule AT – immatriculation autrichienne (VVOnet)",   url:"https://vvonet.vvo.at/vvonet_versichererauskunft", tag:"free"}
+  ]},
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule BG – Fonds de Garantie bulgare",               url:"https://www2.guaranteefund.org/en/information-center/services/motor-third-party-liability-insurance-check", tag:"free"}
+  ]},
+  {code:"BIH", country:"Bosnie-Herzégovine",  flag:"🇧🇦", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule BiH – vérification assurance (BZK)",           url:"https://www.bzkbih.ba/en/provjera-osiguranja", tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule CZ – plaque ou VIN (CKP)",                     url:"https://ic.ckp.cz/ICwww/servlet?_page=searchSPZ&lngID=2", translate:true, tag:"free"}
+  ]},
+  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule DK – assureur véhicule danois (DFIM)",         url:"https://www.dfim.dk/en/accidents-in-denmark/insurance-danish-motor-vehicle/", tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule EE – identification assureur (LKF)",           url:"https://vs.lkf.ee/pls/xlk/!sysadm.ic_insurance_cover_pkt.show_form?p_purpose=CLAIM&p_lang=ENG", tag:"free"}
+  ]},
+  {code:"FIN", country:"Finlande",            flag:"🇫🇮", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule FI – recherche par plaque (claimsic.fi)",      url:"https://www.claimsic.fi/#!/licence-plate-search", translate:true, tag:"free"}
+  ]},
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",            cat:"assurance", links:[
+    {label:"FVA – Fichier des Véhicules Assurés (Agira)",              url:"https://www.fva-assurance.fr/consulter-le-fva/", tag:"login"}
+  ]},
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule GR – assurance par immatriculation (HIC)",     url:"https://www.hic.gr/hic/Check_ins.aspx", tag:"free"}
+  ]},
+  {code:"HRV", country:"Croatie",             flag:"🇭🇷", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule HR – vérification assurance (HUO)",            url:"https://huo.hr/en/information-centre", tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule LT – Bureau des assureurs (CAB)",              url:"https://www.cab.lt/en/", tag:"free"}
+  ]},
+  {code:"LVA", country:"Lettonie",            flag:"🇱🇻", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule LV – assureur responsable (LTAB)",             url:"https://services.ltab.lv/en/RespInsurer", tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule PL – vérification assurance (UFG)",            url:"https://www.ufg.pl/infoportal/faces/pages_home-page", translate:true, tag:"free"}
+  ]},
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule PT – vérification assurance (ASF)",            url:"https://www.consumidor.asf.com.pt/servi%C3%A7os/verificar-seguro-atrav%C3%A9s-da-matr%C3%ADcula", tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule RO – assurance RCA par VIN/plaque (AIDA)",     url:"https://www.aida.info.ro/en/polite-rca", tag:"free"}
+  ]},
+  {code:"SRB", country:"Serbie",              flag:"🇷🇸", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule SRB – Infocenter assureurs (UOS)",             url:"https://www.udruzenjeosiguravaca.rs:9595/webapp/IC/InfocenterBasicSearch.aspx?lang=eng", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule SK – assureur MTPL (SKP)",                     url:"https://www.skp.sk/en/search-the-mtpl-insurer/", tag:"free"}
+  ]},
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule SLO – Infocenter assureurs (ZAV)",             url:"https://infocenter.zav-zdruzenje.si/infocenter-en/infocenter-search-en", tag:"free"}
+  ]},
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule SE – vérification assurance (TFF)",            url:"https://www.tff.se/en/For-insurance-companies/Insurance-check/", tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"assurance", links:[
+    {label:"RC véhicule UA – police nationale + carte verte (MTSBU)",  url:"https://policy.mtsbu.ua/Search/Main/en#tab2", tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"vehicule", links:[
+    {label:"Recherche véhicule par VIN – portail MVS Ukraine",         url:"https://services.mvs.gov.ua/wnt/services/vehicle-search", translate:true, tag:"free"}
+  ]},
+
+  // ══════════════════════════════════
+  // VTC
+  // ══════════════════════════════════
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",            cat:"vtc", links:[
+    {label:"Contrôle autorisation VTC (Ministère Transition Éco.)",    url:"https://vtc-controle.din.developpement-durable.gouv.fr/connexion", tag:"login"}
+  ]},
+
+  // ══════════════════════════════════
+  // PERSONNES RECHERCHÉES
+  // ══════════════════════════════════
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde",         cat:"personnes", links:[
+    {label:"Personnes recherchées (RCMP / GRC)",                       url:"https://www.rcmp-grc.gc.ca/en/wanted", tag:"free"}
+  ]},
+  {code:"HUN", country:"Hongrie",             flag:"🇭🇺", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées – mandat d'arrêt (Police HU)",       url:"https://www.police.hu/hu/koral/elfogatoparancs-alapjan-korozott-szemelyek", translate:true, tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"personnes", links:[
+    {label:"Latitanti – personnes en fuite (Polizia di Stato)",        url:"https://www.poliziadistato.it/articolo/banche-dati", tag:"free"},
+    {label:"CrimNet – documents volés/perdus",                          url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées (ird.lt Policija)",                  url:"https://www.ird.lt/paieska/asmenys_en.php", tag:"free"},
+    {label:"Base recherchés – portail officiel (policija.lrv.lt)",     url:"https://policija.lrv.lt/en/search-in-databases/search-in-the-database-for-wanted-persons/", translate:true, tag:"free"}
+  ]},
+  {code:"EURO", country:"Europol",             flag:"🇪🇺", region:"International",  cat:"personnes", links:[
+    {label:"EU Most Wanted – personnes recherchées Europe (Europol)",  url:"https://eumostwanted.eu/", tag:"free"}
+  ]},
+  {code:"INTER",country:"Interpol",           flag:"🌐", region:"International",  cat:"personnes", links:[
+    {label:"Notices rouges Interpol",                                  url:"https://www.interpol.int/How-we-work/Notices/View-Red-Notices", tag:"free"}
   ]},
 ];
 
