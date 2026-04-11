@@ -539,6 +539,312 @@ html, body {
 .screen.active .ref-card:nth-child(4) { animation-delay: 0.12s; }
 .screen.active .ref-card:nth-child(5) { animation-delay: 0.16s; }
 
+
+/* ══════════════════════════════════
+   ÉCRAN 3 — CALCULATEUR ZLA
+══════════════════════════════════ */
+
+#screen-mrz {
+  background: var(--cream);
+}
+
+.mrz-header {
+  padding: 16px 14px 12px;
+  background: var(--white);
+  border-bottom: 1px solid var(--glt);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mrz-header-icon {
+  width: 36px; height: 36px;
+  background: var(--navy);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.mrz-header h2 { font-size: 15px; font-weight: 800; color: var(--navy); }
+.mrz-header p  { font-size: 11px; color: var(--gray); font-family: 'DM Mono', monospace; }
+
+.mrz-algo-badge {
+  margin-left: auto;
+  background: var(--navy);
+  color: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+
+/* Tabs TD3/TD1 */
+.mrz-tabs {
+  display: flex;
+  padding: 12px 14px 0;
+  gap: 6px;
+  background: var(--cream);
+  flex-shrink: 0;
+}
+
+.mrz-tab {
+  flex: 1;
+  padding: 9px 6px;
+  border-radius: 8px 8px 0 0;
+  background: #E2EAF4;
+  border: 1px solid var(--glt);
+  border-bottom: none;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.mrz-tab.active {
+  background: var(--white);
+  border-color: var(--blue);
+  border-bottom: 1px solid var(--white);
+  color: var(--navy);
+  position: relative;
+  z-index: 2;
+  margin-bottom: -1px;
+}
+
+/* Form panel ZLA */
+.mrz-panel {
+  background: var(--white);
+  border: 1px solid var(--blue);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  padding: 16px 14px;
+  margin: 0 14px;
+  flex-shrink: 0;
+}
+
+.mrz-panel.hidden { display: none; }
+
+.mrz-scroll {
+  padding: 0 14px 20px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+/* Champs ZLA */
+.mf-group { margin-bottom: 13px; }
+
+.mf-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--gray);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mf-len {
+  background: rgba(46,117,182,0.1);
+  border: 1px solid rgba(46,117,182,0.2);
+  color: var(--blue);
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0;
+}
+
+.mf-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--cream);
+  border: 1.5px solid var(--glt);
+  border-radius: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  outline: none;
+  -webkit-appearance: none;
+  transition: border-color 0.15s;
+}
+
+.mf-input:focus { border-color: var(--blue); background: var(--white); }
+.mf-hint { font-size: 10px; color: var(--gray); margin-top: 4px; font-family: 'DM Mono', monospace; }
+
+/* Section label ZLA */
+.mrz-sec {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 10px 0 6px;
+  border-bottom: 1px solid var(--glt);
+  margin-bottom: 10px;
+}
+
+/* Résultats ZLA */
+.mrz-results { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+
+.mr-row {
+  background: var(--cream);
+  border: 1.5px solid var(--glt);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: border-color 0.15s;
+}
+
+.mr-row.ok  { border-color: rgba(21,128,61,0.4);  background: #f0faf4; }
+.mr-row.err { border-color: rgba(220,38,38,0.4); background: #fef2f2; }
+
+.mr-label { font-size: 10px; color: var(--gray); font-family: 'DM Mono', monospace; margin-bottom: 2px; }
+.mr-value { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 700; color: var(--navy); }
+
+.mr-status {
+  margin-left: auto;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.ms-ok  { background: rgba(21,128,61,0.1); color: var(--green); border: 1px solid rgba(21,128,61,0.25); }
+.ms-err { background: rgba(220,38,38,0.1); color: var(--red);   border: 1px solid rgba(220,38,38,0.25); }
+.ms-dim { background: var(--glt); color: var(--gray); border: 1px solid var(--glt); }
+
+/* Composite ZLA */
+.mrz-composite {
+  background: linear-gradient(135deg, #EDF3FB, #FDF8EF);
+  border: 1.5px solid rgba(46,117,182,0.25);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  text-align: center;
+  display: none;
+}
+
+.mrz-composite-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--blue);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.mrz-composite-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 6px;
+}
+
+/* Zone ZLA affichée */
+.mrz-zone {
+  background: var(--navy);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  overflow-x: auto;
+}
+
+.mrz-line-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: rgba(168,196,216,0.7);
+  letter-spacing: 1.5px;
+  white-space: nowrap;
+  line-height: 2;
+}
+
+.mrz-line-display .mhi { color: #E5B55A; font-weight: 700; }
+
+/* Boutons ZLA */
+.mrz-btn-calc {
+  width: 100%;
+  padding: 13px;
+  background: linear-gradient(135deg, var(--navy), #2A4F8A);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: opacity 0.15s;
+}
+
+.mrz-btn-calc:active { opacity: 0.85; }
+
+.mrz-btn-reset {
+  width: 100%;
+  padding: 9px;
+  background: transparent;
+  color: var(--gray);
+  border: 1px solid var(--glt);
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+/* Algo toggle */
+.algo-toggle-btn {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--white);
+  border: 1px solid var(--glt);
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.algo-content {
+  background: var(--white);
+  border: 1px solid var(--glt);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--gray);
+  font-family: 'DM Mono', monospace;
+  line-height: 1.7;
+  display: none;
+}
+
+.algo-content.open { display: block; }
+.algo-content strong { color: var(--gold); }
+
 </style>
 </head>
 <body>
@@ -587,6 +893,121 @@ html, body {
       <div id="cards-list"></div>
     </div>
 
+
+    <!-- ÉCRAN 3 : CALCULATEUR ZLA -->
+    <div class="screen" id="screen-mrz">
+
+      <div class="mrz-header">
+        <div class="mrz-header-icon">🔢</div>
+        <div>
+          <h2>Calculateur ZLA</h2>
+          <p>Chiffres de contrôle OACI</p>
+        </div>
+        <div class="mrz-algo-badge">7·3·1</div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="mrz-tabs">
+        <button class="mrz-tab active" id="mtab-td3" onclick="switchMrzTab('td3')">🛂 Passeport TD3</button>
+        <button class="mrz-tab" id="mtab-td1" onclick="switchMrzTab('td1')">🪪 C.I. TD1</button>
+      </div>
+
+      <div class="mrz-scroll">
+
+        <!-- TD3 -->
+        <div class="mrz-panel" id="mpanel-td3">
+          <div class="mrz-sec">📋 Champs</div>
+          <div class="mf-group">
+            <div class="mf-label">N° document <span class="mf-len">9</span></div>
+            <input class="mf-input" id="m3-doc" maxlength="9" placeholder="AB1234567" oninput="mSanitize(this);mAutoCalc('td3')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Date naissance <span class="mf-len">6</span></div>
+            <input class="mf-input" id="m3-dob" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td3')">
+            <div class="mf-hint">Ex: 15/03/1982 → 820315</div>
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Date expiration <span class="mf-len">6</span></div>
+            <input class="mf-input" id="m3-exp" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td3')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Zone optionnelle <span class="mf-len">14</span></div>
+            <input class="mf-input" id="m3-opt" maxlength="14" placeholder="<<<<<<<<<<<<<<" oninput="mSanitize(this);mAutoCalc('td3')">
+          </div>
+
+          <div class="mrz-sec">🔑 Clés</div>
+          <div class="mrz-results">
+            <div class="mr-row" id="m3-r1"><div style="flex:1"><div class="mr-label">CLÉ N° DOCUMENT</div><div class="mr-value" id="m3-k1">—</div></div><span class="mr-status ms-dim" id="m3-s1">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r2"><div style="flex:1"><div class="mr-label">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m3-k2">—</div></div><span class="mr-status ms-dim" id="m3-s2">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r3"><div style="flex:1"><div class="mr-label">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m3-k3">—</div></div><span class="mr-status ms-dim" id="m3-s3">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r4"><div style="flex:1"><div class="mr-label">CLÉ ZONE OPTIONNELLE</div><div class="mr-value" id="m3-k4">—</div></div><span class="mr-status ms-dim" id="m3-s4">EN ATTENTE</span></div>
+          </div>
+          <div class="mrz-composite" id="m3-comp">
+            <div class="mrz-composite-title">⚡ CLÉ COMPOSITE</div>
+            <div class="mrz-composite-val" id="m3-compval">—</div>
+          </div>
+          <div class="mrz-zone" id="m3-zone">
+            <div class="mrz-line-display" style="opacity:0.3">P&lt;XXX NOM&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+            <div class="mrz-line-display" style="opacity:0.3">[N°DOC]K[NATIO][NAISS]K[S][EXPIR]K[OPT]KK</div>
+          </div>
+          <button class="mrz-btn-calc" onclick="calcMrz('td3')">⚡ Calculer</button>
+          <button class="mrz-btn-reset" onclick="resetMrz('td3')">↺ Effacer</button>
+        </div>
+
+        <!-- TD1 -->
+        <div class="mrz-panel hidden" id="mpanel-td1">
+          <div class="mrz-sec">📋 Champs</div>
+          <div class="mf-group">
+            <div class="mf-label">N° document <span class="mf-len">9</span></div>
+            <input class="mf-input" id="m1-doc" maxlength="9" placeholder="AB1234567" oninput="mSanitize(this);mAutoCalc('td1')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Zone optionnelle 1 L1 pos.16–29 <span class="mf-len">14</span></div>
+            <input class="mf-input" id="m1-opt1" maxlength="14" placeholder="<<<<<<<<<<<<<<" oninput="mSanitize(this);mAutoCalc('td1')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Date naissance <span class="mf-len">6</span></div>
+            <input class="mf-input" id="m1-dob" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td1')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Date expiration <span class="mf-len">6</span></div>
+            <input class="mf-input" id="m1-exp" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td1')">
+          </div>
+          <div class="mf-group">
+            <div class="mf-label">Zone optionnelle 2 L2 pos.29–35 <span class="mf-len">7</span></div>
+            <input class="mf-input" id="m1-opt2" maxlength="7" placeholder="<<<<<<<"  oninput="mSanitize(this);mAutoCalc('td1')">
+          </div>
+
+          <div class="mrz-sec">🔑 Clés</div>
+          <div class="mrz-results">
+            <div class="mr-row" id="m1-r1"><div style="flex:1"><div class="mr-label">CLÉ N° DOCUMENT</div><div class="mr-value" id="m1-k1">—</div></div><span class="mr-status ms-dim" id="m1-s1">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r2"><div style="flex:1"><div class="mr-label">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m1-k2">—</div></div><span class="mr-status ms-dim" id="m1-s2">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r3"><div style="flex:1"><div class="mr-label">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m1-k3">—</div></div><span class="mr-status ms-dim" id="m1-s3">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r4"><div style="flex:1"><div class="mr-label">CLÉ COMPOSITE</div><div class="mr-value" id="m1-k4">—</div></div><span class="mr-status ms-dim" id="m1-s4">EN ATTENTE</span></div>
+          </div>
+          <div class="mrz-composite" id="m1-comp">
+            <div class="mrz-composite-title">⚡ CLÉ COMPOSITE</div>
+            <div class="mrz-composite-val" id="m1-compval">—</div>
+          </div>
+          <div class="mrz-zone" id="m1-zone">
+            <div class="mrz-line-display" style="opacity:0.3">[TYPE][NATIO][N°DOC]K[OPT1]</div>
+            <div class="mrz-line-display" style="opacity:0.3">[NAISS]K[S][EXPIR]K[NATIO2][OPT2]K</div>
+            <div class="mrz-line-display" style="opacity:0.3">[NOM]&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+          </div>
+          <button class="mrz-btn-calc" onclick="calcMrz('td1')">⚡ Calculer</button>
+          <button class="mrz-btn-reset" onclick="resetMrz('td1')">↺ Effacer</button>
+        </div>
+
+        <!-- Algo -->
+        <button class="algo-toggle-btn" onclick="toggleAlgoApp()">📐 Algorithme 7·3·1 — Comment ça marche ? ▼</button>
+        <div class="algo-content" id="algo-app">
+          Chaque caractère reçoit une valeur (0–9 → 0–9, A–Z → 10–35, &lt; → 0) multipliée par le poids cyclique <strong>7, 3, 1</strong>. La somme modulo 10 donne la clé.<br><br>
+          Ex : <strong>AB1</strong> → (10×7)+(11×3)+(1×1) = 104 → mod 10 = <strong>4</strong>
+        </div>
+
+      </div>
+    </div>
+
     <!-- ÉCRAN 2 : BASES DE RÉFÉRENCE -->
     <div class="screen" id="screen-ref">
       <div class="ref-header">
@@ -607,6 +1028,10 @@ html, body {
     <button class="nav-btn" data-screen="screen-ref">
       <span class="nav-icon">📚</span>
       <span class="nav-label">Références</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-mrz">
+      <span class="nav-icon">🔢</span>
+      <span class="nav-label">ZLA 7·3·1</span>
     </button>
   </nav>
 
@@ -1130,6 +1555,127 @@ document.getElementById('bottomnav').addEventListener('click', e => {
 buildCatPills();
 renderCards();
 renderRefs();
+
+// ════════════════════════════════
+// LOGIQUE — CALCULATEUR ZLA
+// ════════════════════════════════
+const MRZ_W = [7,3,1];
+
+function mCharVal(c) {
+  if(c>='0'&&c<='9') return parseInt(c);
+  if(c>='A'&&c<='Z') return c.charCodeAt(0)-55;
+  return 0;
+}
+
+function mCheckDigit(str) {
+  let s=0;
+  for(let i=0;i<str.length;i++) s+=mCharVal(str[i].toUpperCase())*MRZ_W[i%3];
+  return s%10;
+}
+
+function mPad(str,len) {
+  str=(str||'').toUpperCase().replace(/[^A-Z0-9<]/g,'<');
+  while(str.length<len) str+='<';
+  return str.substring(0,len);
+}
+
+function mSanitize(inp) {
+  const p=inp.selectionStart;
+  inp.value=inp.value.toUpperCase().replace(/[^A-Z0-9<]/g,'');
+  inp.setSelectionRange(p,p);
+}
+
+function mSetResult(kid,rid,sid,val) {
+  const k=document.getElementById(kid);
+  const r=document.getElementById(rid);
+  const s=document.getElementById(sid);
+  if(val===null){k.textContent='—';r.className='mr-row';s.className='mr-status ms-dim';s.textContent='EN ATTENTE';return;}
+  k.textContent=val;
+  r.className='mr-row ok';
+  s.className='mr-status ms-ok';
+  s.textContent='✓ OK';
+}
+
+function calcMrz(type) {
+  if(type==='td3') {
+    const doc=mPad(document.getElementById('m3-doc').value,9);
+    const dob=mPad(document.getElementById('m3-dob').value,6);
+    const exp=mPad(document.getElementById('m3-exp').value,6);
+    const opt=mPad(document.getElementById('m3-opt').value,14);
+    const k1=mCheckDigit(doc);
+    const k2=mCheckDigit(dob);
+    const k3=mCheckDigit(exp);
+    const k4=mCheckDigit(opt);
+    mSetResult('m3-k1','m3-r1','m3-s1',k1);
+    mSetResult('m3-k2','m3-r2','m3-s2',k2);
+    mSetResult('m3-k3','m3-r3','m3-s3',k3);
+    mSetResult('m3-k4','m3-r4','m3-s4',k4);
+    const comp=mCheckDigit(doc+k1+dob+k2+exp+k3+opt+k4);
+    document.getElementById('m3-compval').textContent=comp;
+    document.getElementById('m3-comp').style.display='block';
+    document.getElementById('m3-zone').innerHTML=
+      `<div class="mrz-line-display">P&lt;XXX NOM&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+       <div class="mrz-line-display">${doc}<span class="mhi">${k1}</span>XXXXX${dob}<span class="mhi">${k2}</span>X${exp}<span class="mhi">${k3}</span>${opt}<span class="mhi">${k4}</span><span class="mhi">${comp}</span></div>`;
+  } else {
+    const doc=mPad(document.getElementById('m1-doc').value,9);
+    const opt1=mPad(document.getElementById('m1-opt1').value,14);
+    const dob=mPad(document.getElementById('m1-dob').value,6);
+    const exp=mPad(document.getElementById('m1-exp').value,6);
+    const opt2=mPad(document.getElementById('m1-opt2').value,7);
+    const k1=mCheckDigit(doc);
+    const k2=mCheckDigit(dob);
+    const k3=mCheckDigit(exp);
+    const k4=mCheckDigit(doc+k1+opt1+dob+k2+exp+k3+'X'+opt2);
+    mSetResult('m1-k1','m1-r1','m1-s1',k1);
+    mSetResult('m1-k2','m1-r2','m1-s2',k2);
+    mSetResult('m1-k3','m1-r3','m1-s3',k3);
+    mSetResult('m1-k4','m1-r4','m1-s4',k4);
+    document.getElementById('m1-compval').textContent=k4;
+    document.getElementById('m1-comp').style.display='block';
+    document.getElementById('m1-zone').innerHTML=
+      `<div class="mrz-line-display">I&lt;XXX${doc}<span class="mhi">${k1}</span>${opt1}</div>
+       <div class="mrz-line-display">${dob}<span class="mhi">${k2}</span>X${exp}<span class="mhi">${k3}</span>XXXXX${opt2}<span class="mhi">${k4}</span></div>
+       <div class="mrz-line-display">NOM&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>`;
+  }
+}
+
+function mAutoCalc(type) {
+  const ids = type==='td3'
+    ? ['m3-doc','m3-dob','m3-exp']
+    : ['m1-doc','m1-dob','m1-exp'];
+  if(ids.some(id => document.getElementById(id).value.length >= 1)) calcMrz(type);
+}
+
+function resetMrz(type) {
+  if(type==='td3') {
+    ['m3-doc','m3-dob','m3-exp','m3-opt'].forEach(id=>document.getElementById(id).value='');
+    ['m3-k1','m3-k2','m3-k3','m3-k4'].forEach(id=>document.getElementById(id).textContent='—');
+    ['m3-r1','m3-r2','m3-r3','m3-r4'].forEach(id=>document.getElementById(id).className='mr-row');
+    ['m3-s1','m3-s2','m3-s3','m3-s4'].forEach(id=>{const e=document.getElementById(id);e.className='mr-status ms-dim';e.textContent='EN ATTENTE';});
+    document.getElementById('m3-comp').style.display='none';
+    document.getElementById('m3-zone').innerHTML=
+      `<div class="mrz-line-display" style="opacity:0.3">P&lt;XXX NOM&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
+       <div class="mrz-line-display" style="opacity:0.3">[N°DOC]K[NATIO][NAISS]K[S][EXPIR]K[OPT]KK</div>`;
+  } else {
+    ['m1-doc','m1-opt1','m1-dob','m1-exp','m1-opt2'].forEach(id=>document.getElementById(id).value='');
+    ['m1-k1','m1-k2','m1-k3','m1-k4'].forEach(id=>document.getElementById(id).textContent='—');
+    ['m1-r1','m1-r2','m1-r3','m1-r4'].forEach(id=>document.getElementById(id).className='mr-row');
+    ['m1-s1','m1-s2','m1-s3','m1-s4'].forEach(id=>{const e=document.getElementById(id);e.className='mr-status ms-dim';e.textContent='EN ATTENTE';});
+    document.getElementById('m1-comp').style.display='none';
+  }
+}
+
+function switchMrzTab(type) {
+  document.getElementById('mtab-td3').classList.toggle('active',type==='td3');
+  document.getElementById('mtab-td1').classList.toggle('active',type==='td1');
+  document.getElementById('mpanel-td3').classList.toggle('hidden',type!=='td3');
+  document.getElementById('mpanel-td1').classList.toggle('hidden',type!=='td1');
+}
+
+function toggleAlgoApp() {
+  document.getElementById('algo-app').classList.toggle('open');
+}
+
 </script>
 </body>
 </html>
