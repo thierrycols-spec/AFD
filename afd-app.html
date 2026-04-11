@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="AFD">
+<meta name="theme-color" content="#1F3864">
+<title>AFD — Fraude Documentaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #1F3864;
+  --blue:   #2E75B6;
+  --bluelt: #4A90D9;
+  --gold:   #C8973A;
+  --cream:  #F4F1EB;
+  --white:  #FFFFFF;
+  --gray:   #6B7280;
+  --graylt: #E8EDF4;
+  --text:   #1A2332;
+  --red:    #DC2626;
+  --green:  #15803D;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-top:    env(safe-area-inset-top, 0px);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html, body {
+  height: 100%;
+  font-family: 'Syne', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* ── STRUCTURE ── */
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  height: 100dvh;
+}
+
+/* ── TOPBAR ── */
+#topbar {
+  background: var(--navy);
+  padding: calc(var(--safe-top) + 10px) 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.topbar-icon {
+  width: 34px; height: 34px;
+  background: var(--gold);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.topbar-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--white);
+  letter-spacing: -0.2px;
+}
+
+.topbar-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  font-family: 'DM Mono', monospace;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── SCREENS ── */
+#screens {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: none;
+  flex-direction: column;
+}
+
+.screen.active { display: flex; }
+
+/* ── BOTTOM NAV ── */
+#bottomnav {
+  background: var(--white);
+  border-top: 1px solid var(--graylt);
+  display: flex;
+  padding-bottom: var(--safe-bottom);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.nav-btn .nav-icon { font-size: 22px; opacity: 0.4; transition: all 0.15s; }
+.nav-btn .nav-label { font-size: 10px; font-weight: 600; color: var(--gray); transition: all 0.15s; letter-spacing: 0.3px; }
+
+.nav-btn.active .nav-icon { opacity: 1; }
+.nav-btn.active .nav-label { color: var(--navy); }
+.nav-btn:active { transform: scale(0.92); }
+
+/* ══════════════════════════════════
+   ÉCRAN 1 — VÉRIFICATEUR
+══════════════════════════════════ */
+
+/* Barre recherche */
+#search-bar {
+  padding: 12px 14px;
+  background: var(--white);
+  border-bottom: 1px solid var(--graylt);
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 14px 10px 38px;
+  border-radius: 10px;
+  border: 1.5px solid var(--graylt);
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  background: var(--cream);
+  color: var(--text);
+  outline: none;
+  position: relative;
+}
+
+#search-input:focus { border-color: var(--blue); background: var(--white); }
+
+.search-wrap { position: relative; }
+.search-icon {
+  position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
+  font-size: 16px; pointer-events: none;
+}
+
+/* Catégories scroll horizontal */
+#cats-bar {
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+  scrollbar-width: none;
+  background: var(--white);
+  border-bottom: 1px solid var(--graylt);
+}
+#cats-bar::-webkit-scrollbar { display: none; }
+
+.cat-pill {
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1.5px solid var(--graylt);
+  background: var(--cream);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+
+.cat-pill.active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.cat-pill:active { transform: scale(0.95); }
+
+/* Filtre région */
+#region-bar {
+  padding: 8px 14px;
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+  background: var(--cream);
+}
+
+.region-btn {
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1.5px solid var(--graylt);
+  background: var(--white);
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.region-btn.active {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+}
+
+/* Compteur */
+#count-bar {
+  padding: 6px 14px;
+  font-size: 11px;
+  color: var(--gray);
+  font-family: 'DM Mono', monospace;
+  flex-shrink: 0;
+}
+
+/* Cards liste */
+#cards-list {
+  padding: 0 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Séparateurs région */
+.region-sep {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy);
+  font-family: 'DM Mono', monospace;
+  letter-spacing: 0.5px;
+  padding: 10px 0 4px;
+  border-bottom: 2px solid var(--blue);
+  margin-bottom: 2px;
+}
+
+/* Card pays */
+.country-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1.5px solid var(--graylt);
+  overflow: hidden;
+}
+
+.card-head {
+  padding: 12px 14px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--navy), #2A4F8A);
+}
+
+.card-flag { font-size: 24px; flex-shrink: 0; }
+
+.card-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+}
+
+.card-code {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  font-family: 'DM Mono', monospace;
+}
+
+.card-links { padding: 8px 10px; display: flex; flex-direction: column; gap: 6px; }
+
+.link-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.link-btn {
+  flex: 1;
+  padding: 9px 12px;
+  background: var(--cream);
+  border: 1px solid var(--graylt);
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1.3;
+  transition: background 0.15s;
+}
+
+.link-btn:active { background: var(--graylt); }
+
+.link-btn .link-ext { font-size: 10px; opacity: 0.5; flex-shrink: 0; }
+
+.tr-btn {
+  flex-shrink: 0;
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--graylt);
+  border-radius: 8px;
+  border: 1px solid #CBD5E1;
+  font-size: 14px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.tr-btn:active { background: #d0daea; }
+
+/* Tag */
+.tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.t-free    { background:#E8F5E9; color:#2E7D32; border:1px solid #A5D6A7; }
+.t-login   { background:#FFF3E0; color:#E65100; border:1px solid #FFCC80; }
+.t-partial { background:#E3F2FD; color:#1565C0; border:1px solid #90CAF9; }
+
+/* Vide */
+.empty-state {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--gray);
+}
+.empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+/* ══════════════════════════════════
+   ÉCRAN 2 — BASES DE RÉFÉRENCE
+══════════════════════════════════ */
+
+#screen-ref {
+  background: var(--cream);
+}
+
+.ref-header {
+  padding: 16px 14px 12px;
+  background: var(--white);
+  border-bottom: 1px solid var(--graylt);
+  flex-shrink: 0;
+}
+
+.ref-header h2 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.ref-header p {
+  font-size: 12px;
+  color: var(--gray);
+  margin-top: 3px;
+  font-family: 'DM Mono', monospace;
+}
+
+.ref-list {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ref-card {
+  background: var(--white);
+  border-radius: 14px;
+  border: 1.5px solid var(--graylt);
+  overflow: hidden;
+  transition: transform 0.15s;
+}
+
+.ref-card:active { transform: scale(0.98); }
+
+.ref-card-head {
+  background: linear-gradient(135deg, var(--navy) 0%, #2A4F8A 100%);
+  padding: 14px 16px 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ref-card-head::after {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 70px; height: 70px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.05);
+}
+
+.ref-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.ref-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+}
+
+.ref-origin {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+.ref-body {
+  padding: 12px 16px;
+}
+
+.ref-desc {
+  font-size: 12px;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.ref-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.rtag {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.rtag-free    { background:#E8F5E9; color:#2E7D32; border:1px solid #A5D6A7; }
+.rtag-login   { background:#FFF3E0; color:#E65100; border:1px solid #FFCC80; }
+.rtag-partial { background:#E3F2FD; color:#1565C0; border:1px solid #90CAF9; }
+.rtag-world   { background:#F3E5F5; color:#6A1B9A; border:1px solid #CE93D8; }
+.rtag-eu      { background:#E8EDF4; color:var(--navy); border:1px solid #B5C7DF; }
+.rtag-permit  { background:#FFF8E1; color:#F57F17; border:1px solid #FFE082; }
+
+.ref-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.ref-btn-main {
+  flex: 1;
+  padding: 10px 14px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s;
+}
+
+.ref-btn-main:active { background: var(--blue); }
+
+.ref-btn-tr {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  background: var(--graylt);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  text-decoration: none;
+  border: 1px solid #CBD5E1;
+}
+
+/* ══════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════ */
+
+.screen.active .country-card,
+.screen.active .ref-card {
+  animation: slideUp 0.25s ease both;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.screen.active .country-card:nth-child(2) { animation-delay: 0.03s; }
+.screen.active .country-card:nth-child(3) { animation-delay: 0.06s; }
+.screen.active .country-card:nth-child(4) { animation-delay: 0.09s; }
+.screen.active .country-card:nth-child(5) { animation-delay: 0.12s; }
+.screen.active .ref-card:nth-child(2) { animation-delay: 0.04s; }
+.screen.active .ref-card:nth-child(3) { animation-delay: 0.08s; }
+.screen.active .ref-card:nth-child(4) { animation-delay: 0.12s; }
+.screen.active .ref-card:nth-child(5) { animation-delay: 0.16s; }
+
+</style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- TOPBAR -->
+  <div id="topbar">
+    <div class="topbar-icon">🔍</div>
+    <div>
+      <div class="topbar-title">AFD</div>
+    </div>
+    <div class="topbar-sub">Fraude Documentaire</div>
+  </div>
+
+  <!-- SCREENS -->
+  <div id="screens">
+
+    <!-- ÉCRAN 1 : VÉRIFICATEUR -->
+    <div class="screen active" id="screen-verif">
+
+      <!-- Recherche -->
+      <div id="search-bar">
+        <div class="search-wrap">
+          <span class="search-icon">🔎</span>
+          <input id="search-input" type="search" placeholder="Pays, code…" autocomplete="off" autocorrect="off" spellcheck="false">
+        </div>
+      </div>
+
+      <!-- Catégories -->
+      <div id="cats-bar">
+        <button class="cat-pill active" data-cat="all">Tout</button>
+      </div>
+
+      <!-- Région -->
+      <div id="region-bar">
+        <button class="region-btn active" data-region="all">🌍 Tous</button>
+        <button class="region-btn" data-region="EU">🇪🇺 Europe</button>
+        <button class="region-btn" data-region="Monde">🌐 Monde</button>
+      </div>
+
+      <!-- Compteur -->
+      <div id="count-bar">—</div>
+
+      <!-- Liste -->
+      <div id="cards-list"></div>
+    </div>
+
+    <!-- ÉCRAN 2 : BASES DE RÉFÉRENCE -->
+    <div class="screen" id="screen-ref">
+      <div class="ref-header">
+        <h2>📚 Bases de Référence</h2>
+        <p>Consultation de spécimens officiels en ligne</p>
+      </div>
+      <div class="ref-list" id="ref-list"></div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav id="bottomnav">
+    <button class="nav-btn active" data-screen="screen-verif">
+      <span class="nav-icon">🔍</span>
+      <span class="nav-label">Vérificateur</span>
+    </button>
+    <button class="nav-btn" data-screen="screen-ref">
+      <span class="nav-icon">📚</span>
+      <span class="nav-label">Références</span>
+    </button>
+  </nav>
+
+</div>
+
+<script>
+// ══════════════════════════════════
+// DONNÉES — VÉRIFICATEUR
+// ══════════════════════════════════
+const CATS = [
+  {id:"passeport",  label:"Passeport",           icon:"🛂"},
+  {id:"ci",         label:"Carte d'identité",     icon:"🪪"},
+  {id:"permis",     label:"Permis",               icon:"🚦"},
+  {id:"vehicule",   label:"Véhicule",             icon:"🚗"},
+  {id:"voles",      label:"Véhicules volés",      icon:"🚨"},
+  {id:"assurance",  label:"Assurance",            icon:"🛡️"},
+  {id:"personnes",  label:"Pers. recherchées",    icon:"🔎"},
+];
+
+const TAG_CSS   = {free:"t-free", login:"t-login", partial:"t-partial"};
+const TAG_LABEL = {free:"Libre", login:"Connexion", partial:"Partiel"};
+
+const DATA = [
+  // ══ PASSEPORT ══
+  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",    cat:"passeport", links:[
+    {label:"CheckDoc – Passeport",                        url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
+  ]},
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"passeport", links:[
+    {label:"Passeport (MVR officiel)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"passeport", links:[
+    {label:"Passeport invalide – MV",                     url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"passeport", links:[
+    {label:"Validité document (Politsei)",                url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"},
+    {label:"Validité passeport (MFA)",                    url:"https://idchk.mfa.ee/", tag:"free"}
+  ]},
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"passeport", links:[
+    {label:"Passeport grec (Centre national)",            url:"https://www.passport.gov.gr/en/", tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"passeport", links:[
+    {label:"Passeport perdu/volé – CrimNet",              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"passeport", links:[
+    {label:"Documents invalides (IRD)",                   url:"https://www.ird.lt/en/invalidpapers/", tag:"free"},
+    {label:"Portail recherches (policija.lrv.lt)",        url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  ]},
+  {code:"MDA", country:"Moldavie",            flag:"🇲🇩", region:"EU",    cat:"passeport", links:[
+    {label:"Statut document – passeport/CI (ASP)",        url:"https://www.asp.gov.md/ro/verifica-document", translate:true, tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"passeport", links:[
+    {label:"Historique véhicule (historiapojazdu)",       url:"https://historiapojazdu.gov.pl/", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"passeport", links:[
+    {label:"Passeport perdu ou volé (MINV)",              url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
+  ]},
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"passeport", links:[
+    {label:"Documents invalides (e-uprava)",              url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
+  ]},
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"passeport", links:[
+    {label:"Validité passeport (Polisen)",                url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
+  ]},
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"passeport", links:[
+    {label:"Statut passeport/CNI (Politiet)",             url:"https://www.politiet.no/en/english/identity-check/check-passport-and-id-card-status/", tag:"free"}
+  ]},
+  {code:"MAR", country:"Maroc",               flag:"🇲🇦", region:"Monde", cat:"passeport", links:[
+    {label:"Passeport marocain (passeport.ma)",           url:"https://www.passeport.ma/", tag:"free"}
+  ]},
+  {code:"IND", country:"Inde",                flag:"🇮🇳", region:"Monde", cat:"passeport", links:[
+    {label:"Statut passeport (Passport Seva)",            url:"https://www.passportindia.gov.in/psp", tag:"free"}
+  ]},
+  {code:"BTN", country:"Bhoutan",             flag:"🇧🇹", region:"Monde", cat:"passeport", links:[
+    {label:"Portail citoyen Bhoutan – passeport/CID",    url:"https://www.citizenservices.gov.bt/", tag:"login"}
+  ]},
+
+  // ══ CARTE D'IDENTITÉ ══
+  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",    cat:"ci", links:[
+    {label:"CI/Passeport AT (CHECK-AT)",                  url:"https://check-at.gv.at/", tag:"free"}
+  ]},
+  {code:"BEL", country:"Belgique",            flag:"🇧🇪", region:"EU",    cat:"ci", links:[
+    {label:"CheckDoc – Carte d'identité",                 url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
+  ]},
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"ci", links:[
+    {label:"Documents bulgares (MVR)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"ci", links:[
+    {label:"CI invalide – MV",                            url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"ci", links:[
+    {label:"Validité CI (Politsei)",                      url:"https://www.politsei.ee/en/inquiries/document-validity-check", tag:"free"},
+    {label:"Validité CI (MFA)",                           url:"https://idchk.mfa.ee/", tag:"free"}
+  ]},
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"ci", links:[
+    {label:"Titre séjour ressortissants étrangers",       url:"https://pf.emigrants.ypes.gr/pf/?lang=en", tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"ci", links:[
+    {label:"CI perdue/volée – CrimNet",                   url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"},
+    {label:"Codice Fiscale (Agenzia Entrate)",            url:"https://telematici.agenziaentrate.gov.it/VerificaCF/Scegli.do", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"ci", links:[
+    {label:"Documents invalides (IRD)",                   url:"https://www.ird.lt/en/invalidpapers/", tag:"free"},
+    {label:"Portail recherches (policija.lrv.lt)",        url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  ]},
+  {code:"MDA", country:"Moldavie",            flag:"🇲🇩", region:"EU",    cat:"ci", links:[
+    {label:"Statut document (ASP)",                       url:"https://www.asp.gov.md/ro/verifica-document", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"ci", links:[
+    {label:"CI perdue ou volée (MINV)",                   url:"https://www.minv.sk/egovinet/StratenyOdcudzenyDoklad", translate:true, tag:"free"}
+  ]},
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"ci", links:[
+    {label:"CI volée/perdue (e-uprava)",                  url:"https://e-uprava.gov.si/en/public-registers/statusi-dokumentov.html", tag:"free"}
+  ]},
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"ci", links:[
+    {label:"Carte nationale d'identité (Polisen)",        url:"https://etjanster.polisen.se/egid/giltighetskontroll/giltighetskontroll", translate:true, tag:"free"}
+  ]},
+  {code:"ARE", country:"Émirats Arabes Unis", flag:"🇦🇪", region:"Monde", cat:"ci", links:[
+    {label:"Statut carte d'identité (ICP)",               url:"https://icp.gov.ae/en/id-card-status/", tag:"free"}
+  ]},
+
+  // ══ PERMIS DE CONDUIRE ══
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",    cat:"permis", links:[
+    {label:"Permis de conduire (MVR)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"permis", links:[
+    {label:"Permis invalide – MV",                        url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
+  ]},
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",    cat:"permis", links:[
+    {label:"Livret maritime DIM (Ministère Transports)",  url:"https://sede.transportes.gob.es/MFOM.DGMM.LibretaMaritima.Web/Default.aspx?lang=en", translate:true, tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"permis", links:[
+    {label:"Validité permis (eRegitra)",                  url:"https://www.eregitra.lt/services/driver-license/validity-info", tag:"free"}
+  ]},
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",    cat:"permis", links:[
+    {label:"Permis de conduire UK (DVLA)",                url:"https://www.viewdrivingrecord.service.gov.uk/driving-record/licence-number", tag:"login"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"permis", links:[
+    {label:"Permis perdu/volé – CrimNet",                 url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"permis", links:[
+    {label:"Validité permis (eRegitra)",                  url:"https://www.eregitra.lt/services/driver-license/validity-info", tag:"free"}
+  ]},
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"permis", links:[
+    {label:"Registre transporteurs (Vegvesen)",           url:"https://www.vegvesen.no/en/vehicles/professional-transport/permits/oppslag-i-transportorregister/", tag:"free"}
+  ]},
+  {code:"AUS", country:"Australie – QLD",     flag:"🇦🇺", region:"Monde", cat:"permis", links:[
+    {label:"Vérif. permis Queensland",                   url:"https://www.service.transport.qld.gov.au/checkdriverlicencestatus/application/SpecifyCustomer.xhtml", tag:"free"}
+  ]},
+  {code:"AUS", country:"Australie – WA",      flag:"🇦🇺", region:"Monde", cat:"permis", links:[
+    {label:"Vérif. permis Australie Occidentale",        url:"https://www.transport.wa.gov.au/licensing/make-an-online-enquiry.asp", tag:"free"}
+  ]},
+  {code:"CAN", country:"Canada – Ontario",    flag:"🇨🇦", region:"Monde", cat:"permis", links:[
+    {label:"Vérif. permis Ontario (MTO)",                url:"https://www.dlc.rus.mto.gov.on.ca/dlc/enter-details", tag:"free"}
+  ]},
+  {code:"CAN", country:"Canada – Québec",     flag:"🇨🇦", region:"Monde", cat:"permis", links:[
+    {label:"Vérif. permis Québec (SAAQ)",                url:"https://saaq.gouv.qc.ca/en/online-services/citizens/checking-validity-drivers-licence", tag:"free"}
+  ]},
+  {code:"HKG", country:"Hong Kong",           flag:"🇭🇰", region:"Monde", cat:"permis", links:[
+    {label:"Renouvellement permis (TD HK)",              url:"https://eapps2.td.gov.hk/odlr/odlr_ext_web/viewApps0201.do", tag:"free"}
+  ]},
+  {code:"PAK", country:"Pakistan – Punjab",   flag:"🇵🇰", region:"Monde", cat:"permis", links:[
+    {label:"Vérification permis (DLIMS Punjab)",         url:"https://dlims.punjab.gov.pk/verify/", tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"Monde", cat:"permis", links:[
+    {label:"Vérif. permis conducteur (HSC)",             url:"https://opendata.hsc.gov.ua/check-driver-license/", tag:"free"}
+  ]},
+
+  // ══ VÉHICULE ══
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"vehicule", links:[
+    {label:"Véhicules volés/recherchés (Policie CZ)",    url:"https://aplikace.policie.cz/patrani-vozidla/", translate:true, tag:"free"}
+  ]},
+  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",    cat:"vehicule", links:[
+    {label:"Registre national véhicules (skat.dk)",      url:"https://motorregister.skat.dk/dmr-kerne/koeretoejdetaljer/visKoeretoej?execution=e3s1", translate:true, tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"vehicule", links:[
+    {label:"Historique véhicule (Transpordiameti)",      url:"https://eteenindus.mnt.ee/public/soidukTaustakontroll.jsf", tag:"free"}
+  ]},
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",    cat:"vehicule", links:[
+    {label:"HistoVec – historique véhicule",             url:"https://histovec.interieur.gouv.fr/histovec/accueil", tag:"free"},
+    {label:"UTAC-OTC – centre dernier contrôle tech.",   url:"https://www.utac-otc.com/vehicule_leger/Pages/Dernier-Lieu-passage.aspx", tag:"free"}
+  ]},
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",    cat:"vehicule", links:[
+    {label:"Véhicule UK – taxe/contrôle (GOV.UK)",       url:"https://www.vehicleenquiry.service.gov.uk", tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"vehicule", links:[
+    {label:"Données véhicule (eRegitra)",                url:"https://www.eregitra.lt/services/vehicle-registration/data-search", tag:"free"}
+  ]},
+  {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",    cat:"vehicule", links:[
+    {label:"Infos véhicule (Statens vegvesen)",          url:"https://www.vegvesen.no/kjoretoy/kjop-og-salg/kjoretoyopplysninger/sjekk-kjoretoyopplysninger/", translate:true, tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"vehicule", links:[
+    {label:"Historique véhicule (historiapojazdu)",      url:"https://historiapojazdu.gov.pl/", translate:true, tag:"free"}
+  ]},
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",    cat:"vehicule", links:[
+    {label:"Immatriculation (automovelonline.mj.pt)",    url:"https://www.automovelonline.mj.pt/AutoOnlineProd/FrontOfficeController?action=validaMatricula&url=FrontOfficeController%3Faction%3Dpedidocertidao", translate:true, tag:"free"}
+  ]},
+  {code:"USA", country:"États-Unis",          flag:"🇺🇸", region:"Monde", cat:"vehicule", links:[
+    {label:"Historique véhicule NMVTIS (DOJ)",           url:"https://vehiclehistory.bja.ojp.gov/nmvtis_vehiclehistory", tag:"free"}
+  ]},
+  {code:"CHN", country:"Chine",               flag:"🇨🇳", region:"Monde", cat:"vehicule", links:[
+    {label:"Historique véhicule chinois",                url:"https://www.chinavehiclehistory.com/", tag:"free"}
+  ]},
+  {code:"NZL", country:"Nouvelle-Zélande",    flag:"🇳🇿", region:"Monde", cat:"vehicule", links:[
+    {label:"Véhicules volés (Police NZ)",                url:"https://www.police.govt.nz/can-you-help-us/stolen-vehicles", tag:"free"}
+  ]},
+
+  // ══ VÉHICULES VOLÉS ══
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"voles", links:[
+    {label:"Véhicules volés/recherchés (Policie CZ)",    url:"https://aplikace.policie.cz/patrani-vozidla/", translate:true, tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"voles", links:[
+    {label:"Véhicule volé – plaques/châssis CrimNet",    url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-targhe-telai-rubati-smarriti", translate:true, tag:"free"},
+    {label:"Billets contrefaits – CrimNet",              url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-banconote-contraffatte", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"voles", links:[
+    {label:"Véhicules volés/plaques (Police LT – en reconstruction)", url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"voles", links:[
+    {label:"Objets/véhicules recherchés (MINV)",         url:"https://www.minv.sk/?patrveci-index", translate:true, tag:"free"}
+  ]},
+  {code:"INT", country:"International",       flag:"🌍", region:"EU",    cat:"voles", links:[
+    {label:"StolenCars24 – Base européenne",             url:"https://www.stolencars24.eu/fr/main.php", tag:"free"}
+  ]},
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"voles", links:[
+    {label:"Véhicules volés – CPIC (GRC)",               url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
+  ]},
+
+  // ══ ASSURANCE ══
+  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule AT (VVOnet)",                    url:"https://vvonet.vvo.at/vvonet_versichererauskunft", tag:"free"}
+  ]},
+  {code:"BIH", country:"Bosnie",              flag:"🇧🇦", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance BIH (BZK BIH)",                    url:"https://www.bzkbih.ba/en/provjera-osiguranja", tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule CZ – plaque/VIN (CKP)",          url:"https://ic.ckp.cz/ICwww/servlet?_page=searchSPZ&lngID=2", translate:true, tag:"free"}
+  ]},
+  {code:"DNK", country:"Danemark",            flag:"🇩🇰", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance véhicule DK (DFIM)",               url:"https://www.dfim.dk/en/accidents-in-denmark/insurance-danish-motor-vehicle/", tag:"free"}
+  ]},
+  {code:"EST", country:"Estonie",             flag:"🇪🇪", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule ET – assureur (LKF)",            url:"https://vs.lkf.ee/pls/xlk/!sysadm.ic_insurance_cover_pkt.show_form?p_purpose=CLAIM&p_lang=ENG", tag:"free"}
+  ]},
+  {code:"FIN", country:"Finlande",            flag:"🇫🇮", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule FI (claimsic.fi)",               url:"https://www.claimsic.fi/#!/licence-plate-search", translate:true, tag:"free"}
+  ]},
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",    cat:"assurance", links:[
+    {label:"Fonds de Garantie – FVA (fva-assurance.fr)", url:"https://www.fva-assurance.fr/consulter-le-fva/", tag:"free"}
+  ]},
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance véhicule GR (HIC)",                url:"https://www.hic.gr/hic/Check_ins.aspx", tag:"free"},
+    {label:"Fonds de garantie (guaranteefund.org)",      url:"https://www2.guaranteefund.org/en/information-center/services/motor-third-party-liability-insurance-check", tag:"free"}
+  ]},
+  {code:"HRV", country:"Croatie",             flag:"🇭🇷", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance véhicule HR (HUO)",                url:"https://huo.hr/en/information-centre", tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"assurance", links:[
+    {label:"Vérification RCA par plaque (Portale Automobilista)", url:"https://www.ilportaledellautomobilista.it/web/portale-automobilista/ext/verifica-copertura-rc", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"assurance", links:[
+    {label:"Assureur responsable véhicule LT (CAB)",     url:"https://www.cab.lt/en/", tag:"free"}
+  ]},
+  {code:"LVA", country:"Lettonie",            flag:"🇱🇻", region:"EU",    cat:"assurance", links:[
+    {label:"Assureur responsable LV (LTAB)",             url:"https://services.ltab.lv/en/RespInsurer", tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule PL (UFG)",                       url:"https://www.ufg.pl/infoportal/faces/pages_home-page", translate:true, tag:"free"}
+  ]},
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance par immat. PT (ASF)",              url:"https://www.consumidor.asf.com.pt/servi%C3%A7os/verificar-seguro-atrav%C3%A9s-da-matr%C3%ADcula", tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule RO – RCA (AIDA)",                url:"https://www.aida.info.ro/polite-rca", translate:true, tag:"free"}
+  ]},
+  {code:"SRB", country:"Serbie",              flag:"🇷🇸", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule SRB (UOS Infocenter)",           url:"https://www.udruzenjeosiguravaca.rs:9595/webapp/IC/InfocenterBasicSearch.aspx?lang=eng", translate:true, tag:"free"}
+  ]},
+  {code:"SVK", country:"Slovaquie",           flag:"🇸🇰", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule SK – assureur (SKP)",            url:"https://www.skp.sk/en/search-the-mtpl-insurer/", tag:"free"}
+  ]},
+  {code:"SVN", country:"Slovénie",            flag:"🇸🇮", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule SI (ZAV infocenter)",            url:"https://infocenter.zav-zdruzenje.si/infocenter-en/infocenter-search-en", tag:"free"}
+  ]},
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",    cat:"assurance", links:[
+    {label:"RC véhicule SE (TFF)",                       url:"https://www.tff.se/en/For-insurance-companies/Insurance-check/", tag:"free"}
+  ]},
+  {code:"TUR", country:"Türkiye",             flag:"🇹🇷", region:"EU",    cat:"assurance", links:[
+    {label:"Identité (TC Kimlik – NVI)",                 url:"https://tckimlik.nvi.gov.tr/", translate:true, tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",    cat:"assurance", links:[
+    {label:"Assurance véhicule UA (MTSBU)",              url:"https://policy.mtsbu.ua/Search/Main/en#tab2", tag:"free"}
+  ]},
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"assurance", links:[
+    {label:"Véhicules volés CPIC (GRC)",                 url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
+  ]},
+  {code:"KGZ", country:"Kirghizistan",        flag:"🇰🇬", region:"Monde", cat:"assurance", links:[
+    {label:"e-Gov docs (portail Tunduk)",                url:"https://portal.tunduk.kg/public_services/opisanie/213", translate:true, tag:"free"}
+  ]},
+
+  // ══ PERSONNES RECHERCHÉES ══
+  {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde", cat:"personnes", links:[
+    {label:"Personnes recherchées (RCMP/GRC)",           url:"https://www.rcmp-grc.gc.ca/en/wanted", tag:"free"}
+  ]},
+  {code:"HUN", country:"Hongrie",             flag:"🇭🇺", region:"EU",    cat:"personnes", links:[
+    {label:"Personnes recherchées – mandat d'arrêt",     url:"https://www.police.hu/hu/koral/elfogatoparancs-alapjan-korozott-szemelyek", translate:true, tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",    cat:"personnes", links:[
+    {label:"Latitanti – personnes en fuite (Polizia)",   url:"https://www.poliziadistato.it/articolo/banche-dati", tag:"free"},
+    {label:"CrimNet – documents volés/perdus",           url:"https://crimnet.dcpc.interno.gov.it/crimnet/ricerca-documenti-rubati-smarriti", translate:true, tag:"free"}
+  ]},
+  {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",    cat:"personnes", links:[
+    {label:"Base recherchés (policija.lrv.lt)",          url:"https://policija.lrv.lt/en/search-in-databases/search-in-the-database-for-wanted-persons/", translate:true, tag:"free"}
+  ]},
+  {code:"INT", country:"Interpol",            flag:"🌍", region:"EU",    cat:"personnes", links:[
+    {label:"Notices rouges INTERPOL",                    url:"https://www.interpol.int/How-we-work/Notices/View-Red-Notices", tag:"free"}
+  ]},
+  {code:"INT2", country:"EU Most Wanted",     flag:"🇪🇺", region:"EU",   cat:"personnes", links:[
+    {label:"EU Most Wanted (Europol)",                   url:"https://eumostwanted.eu/", tag:"free"}
+  ]},
+];
+
+// ══════════════════════════════════
+// DONNÉES — BASES DE RÉFÉRENCE
+// ══════════════════════════════════
+const REFS = [
+  {
+    type: "Conseil de l'UE · Officiel",
+    title: "PRADO",
+    fullTitle: "Public Register of Authentic Documents Online",
+    origin: "Conseil de l'Union Européenne",
+    desc: "Registre public officiel du Conseil de l'UE. Couvre passeports, CI, visas, titres de séjour et permis de conduire de tous les États membres et nombreux pays tiers. Accès libre, mis à jour en continu.",
+    tags: [{label:"Accès libre", css:"rtag-free"}, {label:"UE + monde", css:"rtag-eu"}, {label:"Multilingue", css:"rtag-world"}],
+    url: "https://www.consilium.europa.eu/prado/fr/search-by-document-country.html",
+    translate: false
+  },
+  {
+    type: "Police Néerlandaise · Interpol",
+    title: "EdisonTD",
+    fullTitle: "Travel Documents Database",
+    origin: "Police NL + Canada + Australie + USA + EAU + Interpol",
+    desc: "Base mondiale de spécimens de documents de voyage. Premier niveau gratuit sans inscription. Plus de pays couverts que PRADO hors UE. Disponible en 6 langues dont le français.",
+    tags: [{label:"Niveau 1 libre", css:"rtag-partial"}, {label:"Niveau 2 sur inscription", css:"rtag-login"}, {label:"Mondial", css:"rtag-world"}],
+    url: "https://www.edisontd.nl/about",
+    translate: false
+  },
+  {
+    type: "Académie de Police Néerlandaise",
+    title: "BURA",
+    fullTitle: "Base documentaire – Politie Academie",
+    origin: "Politie Academie · Pays-Bas",
+    desc: "Outil de l'Académie de Police néerlandaise pour consulter et comparer des spécimens de documents officiels. Référence de formation utilisée dans les services de police européens.",
+    tags: [{label:"Europe", css:"rtag-eu"}, {label:"Formation police", css:"rtag-world"}],
+    url: "https://webapps.politieacademie.nl/bura",
+    translate: true
+  },
+  {
+    type: "Commission Européenne",
+    title: "Modèles permis EEE",
+    fullTitle: "Permis de conduire – États membres EEE",
+    origin: "Commission Européenne — DG MOVE",
+    desc: "Base officielle de la Commission européenne répertoriant les modèles de permis de conduire de tous les pays de l'EEE. Caractéristiques physiques, éléments de sécurité, catégories.",
+    tags: [{label:"Accès libre", css:"rtag-free"}, {label:"EEE uniquement", css:"rtag-eu"}, {label:"Permis de conduire", css:"rtag-permit"}],
+    url: "https://road-safety.transport.ec.europa.eu/road-safety-member-states_en",
+    translate: false
+  },
+  {
+    type: "Référentiel international",
+    title: "IDP Reference",
+    fullTitle: "International Driving Permit Reference",
+    origin: "internationaldrivingpermit.org",
+    desc: "Informations pays par pays sur les permis de conduire internationaux (IDPs). Conventions applicables (Genève 1949, Vienne 1968), formats autorisés et conditions de reconnaissance.",
+    tags: [{label:"Accès libre", css:"rtag-free"}, {label:"Mondial", css:"rtag-world"}, {label:"Permis international", css:"rtag-permit"}],
+    url: "https://internationaldrivingpermit.org/",
+    translate: false
+  },
+];
+
+// ══════════════════════════════════
+// LOGIQUE — VÉRIFICATEUR
+// ══════════════════════════════════
+let activeCat = "all";
+let activeRegion = "all";
+let searchQ = "";
+
+function buildCatPills() {
+  const bar = document.getElementById('cats-bar');
+  CATS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-pill';
+    btn.dataset.cat = c.id;
+    btn.innerHTML = `${c.icon} ${c.label}`;
+    bar.appendChild(btn);
+  });
+  bar.addEventListener('click', e => {
+    const btn = e.target.closest('.cat-pill');
+    if(!btn) return;
+    activeCat = btn.dataset.cat;
+    document.querySelectorAll('.cat-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // Scroll into view
+    btn.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+    renderCards();
+  });
+}
+
+document.getElementById('region-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.region-btn');
+  if(!btn) return;
+  activeRegion = btn.dataset.region;
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCards();
+});
+
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQ = e.target.value.trim().toLowerCase();
+  renderCards();
+});
+
+function filtered() {
+  return DATA.filter(d => {
+    if(activeCat !== 'all' && d.cat !== activeCat) return false;
+    if(activeRegion !== 'all' && d.region !== activeRegion) return false;
+    if(searchQ) {
+      const hay = (d.country + d.code + d.links.map(l=>l.label).join(' ')).toLowerCase();
+      if(!hay.includes(searchQ)) return false;
+    }
+    return true;
+  });
+}
+
+function cardHTML(d) {
+  const links = d.links.map(l => `
+    <div class="link-row">
+      <a class="link-btn" href="${l.url}" target="_blank" rel="noopener">
+        <span style="flex:1">${l.label}</span>
+        <span class="link-ext">↗</span>
+      </a>
+      <span class="tag ${TAG_CSS[l.tag]||'t-partial'}">${TAG_LABEL[l.tag]||l.tag}</span>
+      ${l.translate ? `<a class="tr-btn" href="https://translate.google.com/translate?sl=auto&tl=fr&u=${encodeURIComponent(l.url)}" target="_blank" rel="noopener" title="Traduire">🌐</a>` : ''}
+    </div>
+  `).join('');
+
+  return `<div class="country-card">
+    <div class="card-head">
+      <span class="card-flag">${d.flag}</span>
+      <div>
+        <div class="card-name">${d.country}</div>
+        <div class="card-code">${d.code}</div>
+      </div>
+    </div>
+    <div class="card-links">${links}</div>
+  </div>`;
+}
+
+function renderCards() {
+  const list = filtered();
+  const total = list.reduce((s,d) => s + d.links.length, 0);
+  document.getElementById('count-bar').textContent = `${list.length} pays · ${total} liens`;
+
+  const eu = list.filter(d => d.region === 'EU' || d.region === 'International');
+  const monde = list.filter(d => d.region === 'Monde');
+
+  let html = '';
+  if(eu.length > 0) {
+    html += `<div class="region-sep">🌍 Europe</div>`;
+    html += eu.map(cardHTML).join('');
+  }
+  if(monde.length > 0) {
+    html += `<div class="region-sep">🌐 Reste du monde</div>`;
+    html += monde.map(cardHTML).join('');
+  }
+  if(!html) {
+    html = `<div class="empty-state"><div class="empty-icon">🔍</div><p>Aucun résultat</p></div>`;
+  }
+
+  document.getElementById('cards-list').innerHTML = html;
+}
+
+// ══════════════════════════════════
+// LOGIQUE — BASES DE RÉFÉRENCE
+// ══════════════════════════════════
+function renderRefs() {
+  const list = document.getElementById('ref-list');
+  list.innerHTML = REFS.map(r => `
+    <div class="ref-card">
+      <div class="ref-card-head">
+        <div class="ref-type">${r.type}</div>
+        <div class="ref-title">${r.title}</div>
+        <div class="ref-origin">${r.origin}</div>
+      </div>
+      <div class="ref-body">
+        <p class="ref-desc">${r.desc}</p>
+        <div class="ref-tags">
+          ${r.tags.map(t => `<span class="rtag ${t.css}">${t.label}</span>`).join('')}
+        </div>
+        <div class="ref-actions">
+          <a class="ref-btn-main" href="${r.url}" target="_blank" rel="noopener">🔗 Accéder</a>
+          ${r.translate ? `<a class="ref-btn-tr" href="https://translate.google.com/translate?sl=auto&tl=fr&u=${encodeURIComponent(r.url)}" target="_blank" rel="noopener" title="Traduire en français">🌐</a>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════
+document.getElementById('bottomnav').addEventListener('click', e => {
+  const btn = e.target.closest('.nav-btn');
+  if(!btn) return;
+  const screenId = btn.dataset.screen;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(screenId).classList.add('active');
+  btn.classList.add('active');
+});
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+buildCatPills();
+renderCards();
+renderRefs();
+</script>
+</body>
+</html>
