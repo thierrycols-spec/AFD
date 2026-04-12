@@ -49,14 +49,15 @@ html, body {
 
 /* ── TOPBAR ── */
 #topbar {
-  background: var(--navy);
-  padding: calc(var(--safe-top) + 10px) 16px 10px;
+  background: linear-gradient(135deg, #1F3864 0%, #2A4F8A 100%);
+  padding: calc(var(--safe-top) + 8px) 14px 8px;
   display: flex;
   align-items: center;
   gap: 10px;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
+  border-bottom: 1px solid rgba(200,151,58,0.2);
 }
 
 .topbar-icon {
@@ -853,11 +854,28 @@ html, body {
 
   <!-- TOPBAR -->
   <div id="topbar">
-    <div class="topbar-icon">🔍</div>
-    <div>
-      <div class="topbar-title">AFD</div>
+    <svg viewBox="0 0 340 52" width="220" height="52" style="flex-shrink:0" xmlns="http://www.w3.org/2000/svg">
+      <!-- Lettres AFD outline -->
+      <text x="8" y="40" font-family="Georgia,serif" font-size="46" font-weight="700" fill="none" stroke="#FFFFFF" stroke-width="2">A</text>
+      <text x="46" y="40" font-family="Georgia,serif" font-size="46" font-weight="700" fill="none" stroke="#FFFFFF" stroke-width="2">F</text>
+      <text x="83" y="40" font-family="Georgia,serif" font-size="46" font-weight="700" fill="none" stroke="#FFFFFF" stroke-width="2">D</text>
+      <!-- Loupe or -->
+      <circle cx="52" cy="32" r="14" fill="none" stroke="#C8973A" stroke-width="2.5"/>
+      <circle cx="52" cy="32" r="7" fill="none" stroke="#C8973A" stroke-width="1.5"/>
+      <line x1="62" y1="42" x2="70" y2="50" stroke="#C8973A" stroke-width="3" stroke-linecap="round"/>
+      <!-- Séparateur -->
+      <line x1="128" y1="6" x2="128" y2="46" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+      <!-- Texte AFD -->
+      <text x="140" y="22" font-family="Syne,sans-serif" font-size="15" font-weight="800" fill="#FFFFFF" letter-spacing="1">AFD</text>
+      <!-- Ligne dorée -->
+      <line x1="140" y1="28" x2="330" y2="28" stroke="rgba(200,151,58,0.4)" stroke-width="0.8"/>
+      <!-- Sous-titre -->
+      <text x="140" y="40" font-family="Syne,sans-serif" font-size="9" fill="rgba(255,255,255,0.65)" letter-spacing="0.5">ANALYSE · FORMATION · DÉTECTION</text>
+    </svg>
+    <div style="margin-left:auto;display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0">
+      <span style="font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,0.45);letter-spacing:0.3px">Thierry COLOMAR</span>
+      <span style="background:rgba(200,151,58,0.2);border:1px solid rgba(200,151,58,0.35);color:#C8973A;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;letter-spacing:0.5px">© 2025 AFD</span>
     </div>
-    <div class="topbar-sub">Fraude Documentaire</div>
   </div>
 
   <!-- SCREENS -->
@@ -916,86 +934,88 @@ html, body {
 
         <!-- TD3 -->
         <div class="mrz-panel" id="mpanel-td3">
-          <div class="mrz-sec">📋 Champs</div>
+          <div class="mrz-sec" id="m3-sec-fields">📋 Champs</div>
           <div class="mf-group">
-            <div class="mf-label">N° document <span class="mf-len">9</span></div>
+            <div class="mf-label" id="m3-lbl-doc">N° document <span class="mf-len">9</span></div>
             <input class="mf-input" id="m3-doc" maxlength="9" placeholder="AB1234567" oninput="mSanitize(this);mAutoCalc('td3')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Date naissance <span class="mf-len">6</span></div>
+            <div class="mf-label" id="m3-lbl-dob">Date naissance <span class="mf-len">6</span></div>
             <input class="mf-input" id="m3-dob" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td3')">
-            <div class="mf-hint">Ex: 15/03/1982 → 820315</div>
+            <div class="mf-hint" id="m3-hint-dob-el">Ex: 15/03/1982 → 820315</div>
           </div>
           <div class="mf-group">
-            <div class="mf-label">Date expiration <span class="mf-len">6</span></div>
+            <div class="mf-label" id="m3-lbl-exp">Date expiration <span class="mf-len">6</span></div>
             <input class="mf-input" id="m3-exp" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td3')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Zone optionnelle <span class="mf-len">14</span></div>
+            <div class="mf-label" id="m3-lbl-opt">Zone optionnelle <span class="mf-len">14</span></div>
             <input class="mf-input" id="m3-opt" maxlength="14" placeholder="<<<<<<<<<<<<<<" oninput="mSanitize(this);mAutoCalc('td3')">
           </div>
 
-          <div class="mrz-sec">🔑 Clés</div>
+          <div class="mrz-sec" id="m3-sec-keys">🔑 Clés</div>
           <div class="mrz-results">
-            <div class="mr-row" id="m3-r1"><div style="flex:1"><div class="mr-label">CLÉ N° DOCUMENT</div><div class="mr-value" id="m3-k1">—</div></div><span class="mr-status ms-dim" id="m3-s1">EN ATTENTE</span></div>
-            <div class="mr-row" id="m3-r2"><div style="flex:1"><div class="mr-label">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m3-k2">—</div></div><span class="mr-status ms-dim" id="m3-s2">EN ATTENTE</span></div>
-            <div class="mr-row" id="m3-r3"><div style="flex:1"><div class="mr-label">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m3-k3">—</div></div><span class="mr-status ms-dim" id="m3-s3">EN ATTENTE</span></div>
-            <div class="mr-row" id="m3-r4"><div style="flex:1"><div class="mr-label">CLÉ ZONE OPTIONNELLE</div><div class="mr-value" id="m3-k4">—</div></div><span class="mr-status ms-dim" id="m3-s4">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r1"><div style="flex:1"><div class="mr-label" id="m3-rl1">CLÉ N° DOCUMENT</div><div class="mr-value" id="m3-k1">—</div></div><span class="mr-status ms-dim" id="m3-s1">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r2"><div style="flex:1"><div class="mr-label" id="m3-rl2">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m3-k2">—</div></div><span class="mr-status ms-dim" id="m3-s2">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r3"><div style="flex:1"><div class="mr-label" id="m3-rl3">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m3-k3">—</div></div><span class="mr-status ms-dim" id="m3-s3">EN ATTENTE</span></div>
+            <div class="mr-row" id="m3-r4"><div style="flex:1"><div class="mr-label" id="m3-rl4">CLÉ ZONE OPTIONNELLE</div><div class="mr-value" id="m3-k4">—</div></div><span class="mr-status ms-dim" id="m3-s4">EN ATTENTE</span></div>
           </div>
           <div class="mrz-composite" id="m3-comp">
-            <div class="mrz-composite-title">⚡ CLÉ COMPOSITE</div>
+            <div class="mrz-composite-title" id="m3-comp-lbl">⚡ CLÉ COMPOSITE</div>
             <div class="mrz-composite-val" id="m3-compval">—</div>
           </div>
+          <div class="mrz-sec" id="m3-sec-mrz" style="margin-top:10px">📄 ZLA reconstituée</div>
           <div class="mrz-zone" id="m3-zone">
             <div class="mrz-line-display" style="opacity:0.3">P&lt;XXX NOM&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
             <div class="mrz-line-display" style="opacity:0.3">[N°DOC]K[NATIO][NAISS]K[S][EXPIR]K[OPT]KK</div>
           </div>
-          <button class="mrz-btn-calc" onclick="calcMrz('td3')">⚡ Calculer</button>
-          <button class="mrz-btn-reset" onclick="resetMrz('td3')">↺ Effacer</button>
+          <button class="mrz-btn-calc" id="m3-btn-calc-el" onclick="calcMrz('td3')">⚡ Calculer</button>
+          <button class="mrz-btn-reset" id="m3-btn-reset-el" onclick="resetMrz('td3')">↺ Effacer</button>
         </div>
 
         <!-- TD1 -->
         <div class="mrz-panel hidden" id="mpanel-td1">
-          <div class="mrz-sec">📋 Champs</div>
+          <div class="mrz-sec" id="m3-sec-fields">📋 Champs</div>
           <div class="mf-group">
-            <div class="mf-label">N° document <span class="mf-len">9</span></div>
+            <div class="mf-label" id="m3-lbl-doc">N° document <span class="mf-len">9</span></div>
             <input class="mf-input" id="m1-doc" maxlength="9" placeholder="AB1234567" oninput="mSanitize(this);mAutoCalc('td1')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Zone optionnelle 1 L1 pos.16–29 <span class="mf-len">14</span></div>
+            <div class="mf-label" id="m1-lbl-opt1">Zone optionnelle 1 L1 pos.16–29 <span class="mf-len">14</span></div>
             <input class="mf-input" id="m1-opt1" maxlength="14" placeholder="<<<<<<<<<<<<<<" oninput="mSanitize(this);mAutoCalc('td1')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Date naissance <span class="mf-len">6</span></div>
+            <div class="mf-label" id="m1-lbl-dob">Date naissance <span class="mf-len">6</span></div>
             <input class="mf-input" id="m1-dob" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td1')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Date expiration <span class="mf-len">6</span></div>
+            <div class="mf-label" id="m1-lbl-exp">Date expiration <span class="mf-len">6</span></div>
             <input class="mf-input" id="m1-exp" maxlength="6" placeholder="AAMMJJ" oninput="mSanitize(this);mAutoCalc('td1')">
           </div>
           <div class="mf-group">
-            <div class="mf-label">Zone optionnelle 2 L2 pos.29–35 <span class="mf-len">7</span></div>
+            <div class="mf-label" id="m1-lbl-opt2">Zone optionnelle 2 L2 pos.29–35 <span class="mf-len">7</span></div>
             <input class="mf-input" id="m1-opt2" maxlength="7" placeholder="<<<<<<<"  oninput="mSanitize(this);mAutoCalc('td1')">
           </div>
 
-          <div class="mrz-sec">🔑 Clés</div>
+          <div class="mrz-sec" id="m1-sec-keys">🔑 Clés</div>
           <div class="mrz-results">
-            <div class="mr-row" id="m1-r1"><div style="flex:1"><div class="mr-label">CLÉ N° DOCUMENT</div><div class="mr-value" id="m1-k1">—</div></div><span class="mr-status ms-dim" id="m1-s1">EN ATTENTE</span></div>
-            <div class="mr-row" id="m1-r2"><div style="flex:1"><div class="mr-label">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m1-k2">—</div></div><span class="mr-status ms-dim" id="m1-s2">EN ATTENTE</span></div>
-            <div class="mr-row" id="m1-r3"><div style="flex:1"><div class="mr-label">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m1-k3">—</div></div><span class="mr-status ms-dim" id="m1-s3">EN ATTENTE</span></div>
-            <div class="mr-row" id="m1-r4"><div style="flex:1"><div class="mr-label">CLÉ COMPOSITE</div><div class="mr-value" id="m1-k4">—</div></div><span class="mr-status ms-dim" id="m1-s4">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r1"><div style="flex:1"><div class="mr-label" id="m1-rl1">CLÉ N° DOCUMENT</div><div class="mr-value" id="m1-k1">—</div></div><span class="mr-status ms-dim" id="m1-s1">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r2"><div style="flex:1"><div class="mr-label" id="m1-rl2">CLÉ DATE NAISSANCE</div><div class="mr-value" id="m1-k2">—</div></div><span class="mr-status ms-dim" id="m1-s2">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r3"><div style="flex:1"><div class="mr-label" id="m1-rl3">CLÉ DATE EXPIRATION</div><div class="mr-value" id="m1-k3">—</div></div><span class="mr-status ms-dim" id="m1-s3">EN ATTENTE</span></div>
+            <div class="mr-row" id="m1-r4"><div style="flex:1"><div class="mr-label" id="m1-rl4">CLÉ COMPOSITE</div><div class="mr-value" id="m1-k4">—</div></div><span class="mr-status ms-dim" id="m1-s4">EN ATTENTE</span></div>
           </div>
           <div class="mrz-composite" id="m1-comp">
-            <div class="mrz-composite-title">⚡ CLÉ COMPOSITE</div>
+            <div class="mrz-composite-title" id="m1-comp-lbl">⚡ CLÉ COMPOSITE</div>
             <div class="mrz-composite-val" id="m1-compval">—</div>
           </div>
+          <div class="mrz-sec" id="m1-sec-mrz" style="margin-top:10px">📄 ZLA reconstituée</div>
           <div class="mrz-zone" id="m1-zone">
             <div class="mrz-line-display" style="opacity:0.3">[TYPE][NATIO][N°DOC]K[OPT1]</div>
             <div class="mrz-line-display" style="opacity:0.3">[NAISS]K[S][EXPIR]K[NATIO2][OPT2]K</div>
             <div class="mrz-line-display" style="opacity:0.3">[NOM]&lt;&lt;PRENOMS&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;</div>
           </div>
-          <button class="mrz-btn-calc" onclick="calcMrz('td1')">⚡ Calculer</button>
-          <button class="mrz-btn-reset" onclick="resetMrz('td1')">↺ Effacer</button>
+          <button class="mrz-btn-calc" id="m1-btn-calc-el" onclick="calcMrz('td1')">⚡ Calculer</button>
+          <button class="mrz-btn-reset" id="m1-btn-reset-el" onclick="resetMrz('td1')">↺ Effacer</button>
         </div>
 
         <!-- Algo -->
@@ -1041,6 +1061,7 @@ html, body {
 // ══════════════════════════════════
 // DONNÉES — VÉRIFICATEUR
 // ══════════════════════════════════
+
 const CATS = [
   {id:"passeport",  label:"Passeport",           icon:"🛂"},
   {id:"ci",         label:"Carte d'identité",     icon:"🪪"},
@@ -1054,6 +1075,7 @@ const CATS = [
 
 const TAG_CSS   = {free:"t-free", login:"t-login", partial:"t-partial"};
 const TAG_LABEL = {free:"Libre", login:"Connexion", partial:"Partiel"};
+function getTagLabel(tag) { return TAG_LABEL[tag]||tag; }
 
 const DATA = [
   // ══════════════════════════════════
@@ -1465,6 +1487,8 @@ let searchQ = "";
 
 function buildCatPills() {
   const bar = document.getElementById('cats-bar');
+  // Vider les pills existantes sauf "Tout"
+    bar.innerHTML = '<button class="cat-pill active" data-cat="all">Tout</button>';
   CATS.forEach(c => {
     const btn = document.createElement('button');
     btn.className = 'cat-pill';
@@ -1723,6 +1747,11 @@ function switchMrzTab(type) {
 function toggleAlgoApp() {
   document.getElementById('algo-app').classList.toggle('open');
 }
+
+
+// ════════════════════════════════
+// SYSTÈME DE TRADUCTION FR/EN
+// ════════════════════════════════
 
 </script>
 </body>
