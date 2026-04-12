@@ -1019,7 +1019,7 @@ html, body {
         </div>
 
         <!-- Algo -->
-        <button class="algo-toggle-btn" onclick="toggleAlgoApp()">📐 Algorithme 7·3·1 — Comment ça marche ? ▼</button>
+        <button class="algo-toggle-btn" onclick="toggleAlgoApp()">📐 ICAO Algorithm — How does it work? ▼</button>
         <div class="algo-content" id="algo-app">
           Each character gets a value (0–9 → 0–9, A–Z → 10–35, &lt; → 0) multiplied by the cyclic weight <strong>7, 3, 1</strong>. The sum modulo 10 gives the check digit.<br><br>
           Ex: <strong>AB1</strong> → (10×7)+(11×3)+(1×1) = 104 → mod 10 = <strong>4</strong>
@@ -1065,7 +1065,7 @@ html, body {
 const CATS = [
   {id:"passeport",  label:"Passport",           icon:"🛂"},
   {id:"ci",         label:"ID Card",     icon:"🪪"},
-  {id:"permis",     label:"Driving licence",   icon:"🚦"},
+  {id:"permis",     label:"Permis de conduire",   icon:"🚦"},
   {id:"vehicule",   label:"Vehicle",             icon:"🚗"},
   {id:"voles",      label:"Stolen vehicles",      icon:"🚨"},
   {id:"assurance",  label:"Insurance",            icon:"🛡️"},
@@ -1141,8 +1141,7 @@ const DATA = [
     {label:"CheckDoc – Carte d'identité",                              url:"https://www.checkdoc.be/CheckDoc/login.do", tag:"login"}
   ]},
   {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"ci", links:[
-    {label:"Numéro personnel EGN (CI bulgare)",                        url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"},
-    {label:"CI (MVR officiel)",                                        url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
+    {label:"CI / Passeport bulgare (MVR officiel)",                    url:"https://www.mvr.bg/en/administrative-services/electronized-services/validity-verification-of-bulgarian-personal-documents", tag:"free"}
   ]},
   {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"ci", links:[
     {label:"CI invalide – MV",                                         url:"https://aplikace.mv.gov.cz/neplatne-doklady/default.aspx", translate:true, tag:"free"}
@@ -1240,9 +1239,7 @@ const DATA = [
   // ══════════════════════════════════
   // VÉHICULE
   // ══════════════════════════════════
-  {code:"BIH", country:"Bosnie-Herzégovine",  flag:"🇧🇦", region:"EU",            cat:"vehicule", links:[
-    {label:"Carte verte véhicule (BZK BiH)",                           url:"https://www.bzkbih.ba/en/provjera-osiguranja", tag:"free"}
-  ]},
+
   {code:"CAN", country:"Canada",              flag:"🇨🇦", region:"Monde",         cat:"voles", links:[
     {label:"Véhicules et biens recherchés (CPIC / GRC)",               url:"https://www.cpic-cipc.ca/sve-rve-eng.htm", tag:"free"}
   ]},
@@ -1271,8 +1268,7 @@ const DATA = [
     {label:"Données immatriculation (eRegitra)",                       url:"https://www.eregitra.lt/services/vehicle-registration/data-search", tag:"free"}
   ]},
   {code:"LTU", country:"Lituanie",            flag:"🇱🇹", region:"EU",            cat:"voles", links:[
-    {label:"Véhicules volés / plaques – portail Police LT (en reconstruction)",url:"https://policija.lrv.lt/en/search-in-databases/", tag:"free"},
-    {label:"Portail recherches bases de données (policija.lrv.lt)",    url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
+    {label:"Véhicules volés / plaques – portail Police LT",            url:"https://policija.lrv.lt/en/search-in-databases/", translate:true, tag:"free"}
   ]},
   {code:"NOR", country:"Norvège",             flag:"🇳🇴", region:"EU",            cat:"vehicule", links:[
     {label:"Infos véhicule (Statens vegvesen)",                        url:"https://www.vegvesen.no/kjoretoy/kjop-og-salg/kjoretoyopplysninger/sjekk-kjoretoyopplysninger/", translate:true, tag:"free"},
@@ -1312,7 +1308,7 @@ const DATA = [
   {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"vehicule", links:[
     {label:"Statut immatriculation véhicule roumain (DGPCI)",          url:"https://dgpci.mai.gov.ro/drpciv-forms/vehicle", translate:true, tag:"free"}
   ]},
-  {code:"NZL", country:"Nouvelle-Zélande",    flag:"🇳🇿", region:"Monde",         cat:"vehicule", links:[
+  {code:"NZL", country:"Nouvelle-Zélande",    flag:"🇳🇿", region:"Monde",         cat:"voles", links:[
     {label:"Véhicules volés (Police NZ)",                              url:"https://www.police.govt.nz/can-you-help-us/stolen-vehicles", tag:"free"}
   ]},
   {code:"USA", country:"États-Unis",          flag:"🇺🇸", region:"Monde",         cat:"vehicule", links:[
@@ -1388,6 +1384,160 @@ const DATA = [
   ]},
   {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"vehicule", links:[
     {label:"Recherche véhicule par VIN – portail MVS Ukraine",         url:"https://services.mvs.gov.ua/wnt/services/vehicle-search", translate:true, tag:"free"}
+  ]},
+
+
+  // ══ NOUVEAUX LIENS ADOFOR ══
+
+  // ESPAGNE
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",            cat:"permis", links:[
+    {label:"TESTRA – vérification permis conduire espagnol (DGT)",     url:"https://sedeapl.dgt.gob.es/WEB_TTRA_CONSULTA/Todos.faces?idioma=es", translate:true, tag:"free"}
+  ]},
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",            cat:"ci", links:[
+    {label:"Vérification document avec CSV (Police nationale)",        url:"https://sede.policia.gob.es/sede/pages/publico/verifica.xhtml", translate:true, tag:"free"}
+  ]},
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",            cat:"personnes", links:[
+    {label:"Plus recherchés en Espagne (Guardia Civil)",               url:"https://www.guardiacivil.es/es/colaboracion/buscados/index.html", translate:true, tag:"free"}
+  ]},
+  {code:"ESP", country:"Espagne",             flag:"🇪🇸", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés Espagne par VIN (DESMACE)",                url:"https://desmace.com/sustraidos/", translate:true, tag:"free"}
+  ]},
+
+  // ALLEMAGNE
+  {code:"DEU", country:"Allemagne",           flag:"🇩🇪", region:"EU",            cat:"vehicule", links:[
+    {label:"Contrôle technique GTÜ par plaque (Allemagne)",            url:"https://www.gtue.de/assets/ubsuche/relaunch/ubsuche_form.php", translate:true, tag:"free"},
+    {label:"Chiffre de contrôle VIN (kneifel.de)",                     url:"https://www.kneifel.de/vin.php", translate:true, tag:"free"}
+  ]},
+  {code:"DEU", country:"Allemagne",           flag:"🇩🇪", region:"EU",            cat:"assurance", links:[
+    {label:"Assurance véhicule allemand (eVB-online)",                 url:"https://www.evb-online.com/Webportal/Logon/default.aspx", translate:true, tag:"login"}
+  ]},
+
+  // ITALIE (compléments)
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"ci", links:[
+    {label:"Vérification CI électronique italienne",                   url:"https://www.cartaidentita.interno.gov.it/info-utili/servizio-di-verifica/", translate:true, tag:"free"},
+    {label:"Vérification résidence étrangers (Questure)",              url:"https://questure.poliziadistato.it/stranieri/", translate:true, tag:"free"}
+  ]},
+  {code:"ITA", country:"Italie",              flag:"🇮🇹", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique ITV – Portale Automobilista",                   url:"https://ilportaledellautomobilista.it/interrogazionistoricorevisioni/spa/", translate:true, tag:"free"}
+  ]},
+
+  // PAYS-BAS (compléments)
+  {code:"NLD", country:"Pays-Bas",            flag:"🇳🇱", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés NL (VBV App)",                             url:"https://vbvapp.nl/index.html", translate:true, tag:"free"},
+    {label:"Registre objets volés NL",                                 url:"https://gestolenobjectenregister.nl/", translate:true, tag:"free"}
+  ]},
+  {code:"NLD", country:"Pays-Bas",            flag:"🇳🇱", region:"EU",            cat:"permis", links:[
+    {label:"Vérification permis de circuler NL (RDW)",                 url:"https://documentnummercontroleren.rdw.nl/geldig", translate:true, tag:"free"},
+    {label:"Données véhicule NL par plaque (RDW OVI)",                 url:"https://ovi.rdw.nl/default.aspx", translate:true, tag:"free"}
+  ]},
+
+  // ROYAUME-UNI (compléments)
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique MOT – GOV.UK",                                  url:"https://www.check-mot.service.gov.uk/", tag:"free"},
+    {label:"ISITNICKED – véhicule volé UK",                            url:"https://isitnicked.com/", tag:"free"}
+  ]},
+  {code:"GBR", country:"Royaume-Uni",         flag:"🇬🇧", region:"EU",            cat:"assurance", links:[
+    {label:"Vérification assurance MIB (Royaume-Uni)",                 url:"https://enquiry.navigate.mib.org.uk/checkyourvehicle", tag:"free"}
+  ]},
+
+  // POLOGNE (compléments)
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",            cat:"permis", links:[
+    {label:"Vérification permis de conduire polonais",                 url:"https://moj.gov.pl/uslugi/engine/ng/index?xFormsAppName=UprawnieniaKierowcow", translate:true, tag:"free"},
+    {label:"Statut carte ADR (conducteurs matières dangereuses)",      url:"https://info-car.pl/new/adr/status-adr", translate:true, tag:"free"},
+    {label:"Sécurité autobus – vérification PL",                       url:"https://bezpiecznyautobus.gov.pl/strona-glowna", translate:true, tag:"free"}
+  ]},
+  {code:"POL", country:"Pologne",             flag:"🇵🇱", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées en Pologne (Policja)",               url:"https://poszukiwani.policja.pl/", translate:true, tag:"free"}
+  ]},
+
+  // ROUMANIE (compléments)
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées en Roumanie (Politia Romana)",       url:"https://www.politiaromana.ro/ro/persoane-urmarite", translate:true, tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés Roumanie (Politia Romana)",                url:"https://www.politiaromana.ro/ro/auto-furate", translate:true, tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique ITV véhicule roumain (RAROM)",                  url:"https://pro.rarom.ro/istoric_vehicul/dosar_vehicul.aspx", translate:true, tag:"free"}
+  ]},
+  {code:"ROU", country:"Roumanie",            flag:"🇷🇴", region:"EU",            cat:"passeport", links:[
+    {label:"Vérification visa roumain",                                url:"https://eviza.mae.ro/ro_CheckVisaSticker", translate:true, tag:"free"}
+  ]},
+
+  // PORTUGAL (compléments)
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées – Police judiciaire Portugal",       url:"https://www.policiajudiciaria.pt/category/identif-individuos/", tag:"free"}
+  ]},
+  {code:"PRT", country:"Portugal",            flag:"🇵🇹", region:"EU",            cat:"vehicule", links:[
+    {label:"Véhicule remorqué (SMS Reboques – Portugal)",              url:"https://smsreboques.mai.gov.pt/", translate:true, tag:"free"},
+    {label:"Validation documents IMT (Portugal)",                      url:"https://servicos.imt-ip.pt/ValidarDocumentos.aspx", translate:true, tag:"free"}
+  ]},
+
+  // GRÈCE (compléments)
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",            cat:"passeport", links:[
+    {label:"Passeports perdus/volés – Grèce",                          url:"https://www.passport.gov.gr/passports/SearchStolenLostPassGr/", tag:"free"}
+  ]},
+  {code:"GRC", country:"Grèce",               flag:"🇬🇷", region:"EU",            cat:"permis", links:[
+    {label:"Permis temporaire de conduire grec",                       url:"https://drivers.services.gov.gr/licence/", tag:"free"}
+  ]},
+
+  // SUÈDE (compléments)
+  {code:"SWE", country:"Suède",               flag:"🇸🇪", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique véhicule suédois (Biluppgifter)",               url:"https://biluppgifter.se/", translate:true, tag:"free"},
+    {label:"Vérification permis de circuler suédois",                  url:"https://fordon-verifieraregistreringsbevis.transportstyrelsen.se/kollaregbevis.aspx", translate:true, tag:"free"}
+  ]},
+
+  // AUTRICHE (complément)
+  {code:"AUT", country:"Autriche",            flag:"🇦🇹", region:"EU",            cat:"vehicule", links:[
+    {label:"Données véhicule par permis de circuler (Autriche)",       url:"https://zulassung.oesd.at/fahrzeugdaten-online-abfrage/", translate:true, tag:"free"}
+  ]},
+
+  // TCHÉQUIE (compléments)
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"vehicule", links:[
+    {label:"Historique véhicule CEBIA (République Tchèque)",           url:"https://cz.cebia.com/", translate:true, tag:"free"},
+    {label:"Contrôle VIN (kontrola-vin.cz)",                           url:"https://www.kontrola-vin.cz/", translate:true, tag:"free"}
+  ]},
+  {code:"CZE", country:"Tchéquie",            flag:"🇨🇿", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées en Tchéquie (Policie.cz)",           url:"https://aplikace.policie.cz/patrani-osoby/Vyhledavani.aspx", translate:true, tag:"free"}
+  ]},
+
+  // SERBIE (compléments)
+  {code:"SRB", country:"Serbie",              flag:"🇷🇸", region:"EU",            cat:"ci", links:[
+    {label:"Vérification documents personnels (MUP Serbie)",           url:"https://mup.vladars.net/lat/index.php?vijest=servisi&vrsta=provjera_dokumenata", translate:true, tag:"free"}
+  ]},
+
+  // TURQUIE (compléments)
+  {code:"TUR", country:"Türkiye",             flag:"🇹🇷", region:"EU",            cat:"ci", links:[
+    {label:"Vérification documents turcs (e-Government)",              url:"https://www.turkiye.gov.tr/nvi-tarihceli-yerlesim-yeri-ve-diger-adres-belgesi-dogrulama", translate:true, tag:"free"}
+  ]},
+
+  // UKRAINE (compléments)
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"passeport", links:[
+    {label:"Passeports perdus/volés Ukraine (MVS)",                    url:"https://wanted.mvs.gov.ua/passport/", translate:true, tag:"free"},
+    {label:"Documents invalides Ukraine (DMSU)",                       url:"https://dmsu.gov.ua/services/nd.html", translate:true, tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"voles", links:[
+    {label:"Véhicules volés Ukraine (MVS Wanted)",                     url:"https://wanted.mvs.gov.ua/searchtransport/", translate:true, tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"vehicule", links:[
+    {label:"Certificat d'immatriculation Ukraine (HSC)",               url:"https://opendata.hsc.gov.ua/srtz/", translate:true, tag:"free"}
+  ]},
+  {code:"UKR", country:"Ukraine",             flag:"🇺🇦", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes/objets recherchés Ukraine (MVS Wanted)",         url:"https://wanted.mvs.gov.ua/", translate:true, tag:"free"}
+  ]},
+
+  // BULGARIE (compléments)
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"personnes", links:[
+    {label:"Personnes recherchées en Bulgarie (MVR)",                  url:"https://www.mvr.bg/gdnp/%D0%B4%D0%B5%D0%B9%D0%BD%D0%BE%D1%81%D1%82%D0%B8/ukrivatse", translate:true, tag:"free"}
+  ]},
+  {code:"BGR", country:"Bulgarie",            flag:"🇧🇬", region:"EU",            cat:"vehicule", links:[
+    {label:"ITV véhicule bulgare (RTA)",                               url:"https://rta.government.bg/services/check-inspection/index.html", translate:true, tag:"free"}
+  ]},
+
+  // FRANCE (complément SIV)
+  {code:"FRA", country:"France",              flag:"🇫🇷", region:"EU",            cat:"vehicule", links:[
+    {label:"Situation administrative véhicule – SIV (Ministère Int.)", url:"https://siv.interieur.gouv.fr/map-usg-ui/do/csa_retour_dem_certificat", tag:"free"},
+    {label:"Transaction véhicule – ANTS (immatriculation)",            url:"https://immatriculation.ants.gouv.fr/", tag:"free"}
   ]},
 
   // ══════════════════════════════════
