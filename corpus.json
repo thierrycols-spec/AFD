@@ -4438,5 +4438,13 @@
     "text": "On ne contacte jamais un OPJ pour une infraction au stationnement gênant classique dès lors que le véhicule est identifiable. Dans ce cas, il faut privilégier le chef de service, le chef de brigade, ou le Guide PM, plutôt que de saisir l'OPJ.\n\nLa saisine de l'OPJ n'est obligatoire que si le véhicule n'est pas identifiable (absence de plaque d'immatriculation, absence de numéro de série visible).\n\nDe manière générale, les OPJ sont sollicités avant tout pour des délits ou des crimes, et très peu pour de simples contraventions. Une contravention de stationnement (gênant, dangereux ou abusif) relève de la seule compétence de l'agent verbalisateur tant que le véhicule reste identifiable, et ne justifie pas, dans ce cas, une saisine de l'OPJ territorialement compétent.",
     "char_count": 773,
     "id": "chunk-0554"
+  },
+  {
+    "guide": "Note complémentaire — PVe et rétention du permis : le PVe n'exclut pas la rétention",
+    "file": "(note manuelle, hors collection des guides)",
+    "breadcrumb": "PVe, GVE, rétention du permis, interception du conducteur, article L224-1",
+    "text": "Question fréquente : peut-on retenir le permis quand la contravention est établie par PVe ? Oui, si le conducteur est intercepté et qu'un cas de l'article L224-1 est réuni.\n\nLe PVe (procès-verbal électronique) est un mode de rédaction de la contravention par l'agent. Il n'est pas, par nature, une verbalisation sans interception : la rédaction électronique sert aussi à verbaliser un conducteur arrêté par l'agent, avec paiement immédiat possible par le dispositif électronique de l'agent (voir le guide « La procédure de l'amende forfaitaire »). Le guide « La rétention du permis de conduire » prévoit d'ailleurs la rédaction de la contravention par GVE ou par PV blanc dans les cas de rétention (excès de vitesse de 40 km/h et plus, téléphone tenu en main avec infraction simultanée).\n\nLa condition posée par l'article L224-1 est l'interception du véhicule, pas le support utilisé pour rédiger l'infraction. Le recours à la procédure de l'amende forfaitaire, y compris en cas de paiement, ne fait pas obstacle à la rétention ni à la suspension (articles L224-1 à L224-7, voir le guide « La rétention du permis de conduire », partie VI).\n\nSeules les infractions constatées sans interception (contrôle automatisé, vidéoverbalisation) excluent la rétention, faute de conducteur intercepté. Le PVe de l'agent qui a arrêté le conducteur n'entre pas dans cette catégorie.",
+    "char_count": 1368,
+    "id": "chunk-0555"
   }
 ]
